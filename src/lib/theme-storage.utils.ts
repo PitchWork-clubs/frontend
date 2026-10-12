@@ -1,10 +1,10 @@
 import type { ClubBrand, ResolvedThemeMode } from "@/types/theme.types";
 import { getThemeCssVariables } from "@/lib/palette-generator.utils";
 
-export const ACTIVE_CLUB_STORAGE_KEY = "clubsheet_active_club";
-export const ACTIVE_CLUB_COOKIE_NAME = "clubsheet_active_club";
-const CLUB_THEME_STORAGE_PREFIX = "clubsheet_brand_";
-const CLUB_THEME_COOKIE_PREFIX = "clubsheet_brand_";
+export const ACTIVE_CLUB_STORAGE_KEY = "pitchwork_active_club";
+export const ACTIVE_CLUB_COOKIE_NAME = "pitchwork_active_club";
+const CLUB_THEME_STORAGE_PREFIX = "pitchwork_brand_";
+const CLUB_THEME_COOKIE_PREFIX = "pitchwork_brand_";
 
 export interface StoredClubTheme {
   brand: ClubBrand;

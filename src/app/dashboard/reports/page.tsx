@@ -101,7 +101,7 @@ function ReportsContent() {
 
   const handleExport = (reportTitle: string, format: "CSV" | "PDF") => {
     const filename = `${reportTitle.toLowerCase().replace(/[^a-z0-9]/g, "_")}.${format.toLowerCase()}`;
-    const sampleData = `Report: ${reportTitle}\nPeriod: ${customPeriodLabel || "Standard Season"}\nGenerated: ${new Date().toISOString()}\nStatus: Official Clubsheet Verified`;
+    const sampleData = `Report: ${reportTitle}\nPeriod: ${customPeriodLabel || "Standard Season"}\nGenerated: ${new Date().toISOString()}\nStatus: Official Pitchwork Verified`;
     
     const blob = new Blob([sampleData], { type: format === "CSV" ? "text/csv" : "application/pdf" });
     const url = URL.createObjectURL(blob);

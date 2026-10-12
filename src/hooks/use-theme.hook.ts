@@ -5,7 +5,7 @@ import { ThemeContext } from "@/components/theme-provider.component";
 import type { ThemeContextValue } from "@/types/theme.types";
 
 /**
- * Hook to access and manipulate the centralized ClubSheet theme system.
+ * Hook to access and manipulate the centralized PitchWork theme system.
  *
  * Provides:
  * - `mode`: The current preference ('system' | 'light' | 'dark')

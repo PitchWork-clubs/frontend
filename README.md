@@ -1,10 +1,10 @@
-# ClubSheet
+# PitchWork
 
-ClubSheet is a shared workspace for sports clubs and academies.
+PitchWork is a shared workspace for sports clubs and academies.
 
 Running a club involves much more than what happens on match day. People, teams, training, contracts, finances, medical information, communication, and decisions all need to stay connected. In many clubs, that information is scattered across spreadsheets, messaging groups, paper documents, and individual memories.
 
-ClubSheet brings those parts of the club together in one organized place.
+PitchWork brings those parts of the club together in one organized place.
 
 ## The Idea
 
@@ -21,11 +21,11 @@ Instead of asking:
 - Where are the medical or registration details?
 - Which version of the financial record is correct?
 
-ClubSheet gives the club a shared source of truth.
+PitchWork gives the club a shared source of truth.
 
 ## Who It Is For
 
-ClubSheet is intended for:
+PitchWork is intended for:
 
 - Football clubs
 - Sports academies
@@ -43,7 +43,7 @@ It is designed for clubs that are growing beyond informal tools and need a clear
 
 Each club has its own workspace. The club can organize its people, teams, activities, and records in one connected environment.
 
-A person may have different responsibilities in different clubs. For example, someone could be a coach in one club and an administrator in another. ClubSheet keeps those relationships separate so that each person sees the responsibilities and information relevant to their role in the selected club.
+A person may have different responsibilities in different clubs. For example, someone could be a coach in one club and an administrator in another. PitchWork keeps those relationships separate so that each person sees the responsibilities and information relevant to their role in the selected club.
 
 Access is based on the club relationship and assigned responsibilities. A coach, administrator, medical staff member, and athlete do not need to see or manage the same things.
 
@@ -75,11 +75,11 @@ Give club members a place to communicate in context. Conversations, group inform
 
 ### Roles and Permissions
 
-Let each club decide who can access information and perform specific actions. ClubSheet is built around the idea that good organization includes clear responsibility and controlled access.
+Let each club decide who can access information and perform specific actions. PitchWork is built around the idea that good organization includes clear responsibility and controlled access.
 
 ## The Core Value
 
-ClubSheet helps clubs move from scattered information to connected work.
+PitchWork helps clubs move from scattered information to connected work.
 
 It aims to provide:
 
@@ -100,6 +100,6 @@ Everyone works from the same club context while seeing the parts that belong to 
 
 ## The Long-Term Vision
 
-ClubSheet is intended to become the operating center of a club: the place where its people, decisions, activities, and history come together.
+PitchWork is intended to become the operating center of a club: the place where its people, decisions, activities, and history come together.
 
 The aim is not to add another disconnected tool. The aim is to give clubs a clearer way to work, communicate, grow, and make decisions with confidence.

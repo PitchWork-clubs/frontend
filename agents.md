@@ -1,8 +1,8 @@
-# ClubSheet Frontend — AGENTS.md
+# PitchWork Frontend — AGENTS.md
 
 ## 1. General Rule
 
-You are working on the **ClubSheet** frontend.
+You are working on the **PitchWork** frontend.
 
 Before making changes, understand the existing architecture and follow the project's established patterns. Do not introduce a new pattern, library, component structure, styling approach, or abstraction unless there is a clear reason.
 
@@ -431,7 +431,7 @@ If the backend contract is unclear, inspect the backend implementation/schema be
 
 # 14. Authentication and Authorization
 
-ClubSheet contains users, memberships, clubs, teams, and different permissions.
+PitchWork contains users, memberships, clubs, teams, and different permissions.
 
 Never assume that:
 
@@ -454,7 +454,7 @@ Never put secrets or sensitive credentials in client-side code.
 
 # 15. Domain Awareness
 
-ClubSheet is built around relationships between concepts such as:
+PitchWork is built around relationships between concepts such as:
 
 ```text
 Person
@@ -523,7 +523,7 @@ Avoid over-engineering abstractions before there is real reuse.
 
 # 17. Tables and Data-Heavy Screens
 
-ClubSheet contains administrative and management interfaces where tables may be heavily used.
+PitchWork contains administrative and management interfaces where tables may be heavily used.
 
 Tables should support appropriate:
 
@@ -605,7 +605,7 @@ Avoid unnecessary animation dependencies.
 
 # 20. Scroll-Driven Experiences
 
-ClubSheet may use highly visual landing-page sections and scroll-driven animations.
+PitchWork may use highly visual landing-page sections and scroll-driven animations.
 
 For these sections:
 
@@ -1024,7 +1024,7 @@ Before considering the task finished, verify:
 
 # 39. Agent Behavior
 
-When working on ClubSheet, agents should:
+When working on PitchWork, agents should:
 
 * inspect before modifying
 * search before creating

@@ -373,7 +373,7 @@ export function Chaos2ClaritySection() {
           <ArrowDown className="chaos-mobile-arrow my-5 h-5 w-5 text-primary" aria-hidden="true" />
 
           <div className="rounded-2xl border border-primary/20 bg-primary px-6 py-4 text-lg font-bold text-primary-foreground shadow-lg">
-            ClubSheet
+            PitchWork
           </div>
         </div>
       </div>

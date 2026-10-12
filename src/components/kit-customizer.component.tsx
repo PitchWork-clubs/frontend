@@ -73,7 +73,7 @@ export function KitCustomizer({ className, onSave }: KitCustomizerProps) {
           <button
             type="button"
             onClick={handleReset}
-            title="Reset to ClubSheet default"
+            title="Reset to PitchWork default"
             className="flex items-center gap-1.5 rounded-xl border border-border bg-card px-3 py-1.5 text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-muted transition-colors cursor-pointer"
           >
             <RotateCcw className="h-3.5 w-3.5" />

@@ -83,7 +83,7 @@ export interface ThemeContextValue {
   resolvedMode: ResolvedThemeMode;
   /** Update the user's mode preference (persisted to cookie). */
   setMode: (mode: ThemeMode) => void;
-  /** The active club's brand colours (empty object = ClubSheet default). */
+  /** The active club's brand colours (empty object = PitchWork default). */
   brand: ClubBrand;
   /** Update the active brand and persist it for the supplied or stored active club, when available. */
   setBrand: (brand: ClubBrand, clubId?: string) => void;

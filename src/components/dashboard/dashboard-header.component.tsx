@@ -11,7 +11,7 @@ interface DashboardHeaderProps {
 }
 
 const ROUTE_TITLES: Record<string, { title: string; section?: string }> = {
-  "/dashboard": { title: "Overview", section: "ClubSheet" },
+  "/dashboard": { title: "Overview", section: "PitchWork" },
   "/dashboard/athletes": { title: "Athletes", section: "Club" },
   "/dashboard/teams": { title: "Teams", section: "Club" },
   "/dashboard/training": { title: "Training", section: "Sport" },
@@ -41,7 +41,7 @@ export function DashboardHeader({
       ? { title: "Training Details", section: "Training" }
       : pathname.startsWith("/dashboard/matches/")
       ? { title: "Match Details", section: "Matches" }
-      : { title: "Dashboard", section: "ClubSheet" });
+      : { title: "Dashboard", section: "PitchWork" });
 
   const resolvedTitle = pageTitle ?? currentRoute.title;
 
@@ -80,8 +80,8 @@ export function DashboardHeader({
           <input
             type="text"
             readOnly
-            placeholder="Search ClubSheet... (⌘K)"
-            aria-label="Search ClubSheet"
+            placeholder="Search PitchWork... (⌘K)"
+            aria-label="Search PitchWork"
             className="h-8 w-48 lg:w-64 rounded-lg border border-border bg-muted/50 pl-8 pr-3 text-xs text-foreground placeholder:text-muted-foreground focus:outline-none cursor-pointer hover:border-primary/50 transition-colors"
           />
         </div>

@@ -26,13 +26,13 @@ export default function RegisterPage() {
               height={30}
               className="rounded-md"
             />
-            <h3 className="text-sm font-semibold sm:text-base">ClubSheet</h3>
+            <h3 className="text-sm font-semibold sm:text-base">PitchWork</h3>
           </Link>
 
           <div className="relative z-20 space-y-2 sm:space-y-3 mt-auto">
             <h2 className="text-base font-bold tracking-tight sm:text-xl">Join the Elite.</h2>
             <p className="max-w-md text-[0.65rem] leading-relaxed text-gray-300 sm:text-[0.7rem]">
-              The world&apos;s top clubs use ClubSheet to manage their rosters, staff, and finances with surgical precision. Start building your legacy today.
+              The world&apos;s top clubs use PitchWork to manage their rosters, staff, and finances with surgical precision. Start building your legacy today.
             </p>
           </div>
         </div>

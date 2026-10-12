@@ -29,7 +29,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "ClubSheet - Club Management Platform",
+  title: "PitchWork - Club Management Platform",
   description: "A modern management platform designed specifically for football clubs and academies",
   icons: {
     icon: DARK_MODE_ENABLED
@@ -50,12 +50,12 @@ const antiFlashScript = `
       var match = document.cookie.match(new RegExp('(?:^|; )' + name + '=([^;]*)'));
       return match ? decodeURIComponent(match[1]) : null;
     };
-    var activeClubId = cookieValue('${ACTIVE_CLUB_COOKIE_NAME}') || window.localStorage.getItem('clubsheet_active_club');
+    var activeClubId = cookieValue('${ACTIVE_CLUB_COOKIE_NAME}') || window.localStorage.getItem('pitchwork_active_club');
     var serverClubId = root.getAttribute('data-initial-club-id');
 
     // SSR already used the active club's source-of-truth brand. Only use a browser snapshot when SSR lacked it.
     if (activeClubId && (!serverClubId || serverClubId !== activeClubId)) {
-      var storedTheme = window.localStorage.getItem('clubsheet_brand_' + activeClubId);
+      var storedTheme = window.localStorage.getItem('pitchwork_brand_' + activeClubId);
       var snapshot = storedTheme ? JSON.parse(storedTheme) : null;
       var variables = snapshot && snapshot.variables;
       if (variables && typeof variables === 'object') {
@@ -65,7 +65,7 @@ const antiFlashScript = `
       }
     }
 
-    var match = document.cookie.match(/(?:^|; )clubsheet_theme_mode=([^;]*)/);
+    var match = document.cookie.match(/(?:^|; )pitchwork_theme_mode=([^;]*)/);
     var mode = match ? decodeURIComponent(match[1]) : 'system';
     var darkModeEnabled = ${DARK_MODE_ENABLED};
     var isDark = darkModeEnabled && (mode === 'dark' || (mode === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches));
@@ -86,7 +86,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const cookieStore = await cookies();
-  const rawMode = cookieStore.get("clubsheet_theme_mode")?.value;
+  const rawMode = cookieStore.get("pitchwork_theme_mode")?.value;
   const initialMode: ThemeMode =
     rawMode && ["system", "light", "dark"].includes(rawMode)
       ? (rawMode as ThemeMode)

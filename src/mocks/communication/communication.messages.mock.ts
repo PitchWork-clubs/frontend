@@ -226,7 +226,7 @@ export const MOCK_COMMUNICATION_MESSAGES: Record<string, Message[]> = {
       conversationId: 'grp-announcements',
       senderId: 'member-1',
       content:
-        'New season training programme is now live. All players please review your individual plans on the ClubSheet app.',
+        'New season training programme is now live. All players please review your individual plans on the PitchWork app.',
       messageType: 'TEXT',
       reactions: [
         { emoji: '👍', count: 5, memberIds: ['member-2', 'member-3', 'member-6', 'member-7', 'member-9'] },

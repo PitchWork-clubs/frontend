@@ -29,7 +29,7 @@ export default function ResetPasswordPage() {
               height={30}
               className="rounded-md"
             />
-            <h3 className="text-base font-semibold sm:text-lg">ClubSheet</h3>
+            <h3 className="text-base font-semibold sm:text-lg">PitchWork</h3>
           </Link>
 
           <div className="relative z-20 space-y-2 sm:space-y-3 mt-auto">

@@ -124,7 +124,7 @@ export default function DocumentsPage() {
 
   const handleDownloadDoc = (doc: ClubDoc) => {
     // Generate sample text file blob to trigger browser download
-    const blob = new Blob([`ClubSheet Document Export\nName: ${doc.name}\nFolder: ${doc.folder}\nSize: ${doc.size}\nDate: ${doc.updatedAt}`], { type: "text/plain" });
+    const blob = new Blob([`PitchWork Document Export\nName: ${doc.name}\nFolder: ${doc.folder}\nSize: ${doc.size}\nDate: ${doc.updatedAt}`], { type: "text/plain" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;

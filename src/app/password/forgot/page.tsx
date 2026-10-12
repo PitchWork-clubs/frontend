@@ -29,7 +29,7 @@ export default function ForgotPasswordPage() {
               height={30}
               className="rounded-md"
             />
-            <h3 className="text-sm font-semibold sm:text-base">ClubSheet</h3>
+            <h3 className="text-sm font-semibold sm:text-base">PitchWork</h3>
           </Link>
 
           <div className="relative z-20 space-y-2 sm:space-y-3 mt-auto">

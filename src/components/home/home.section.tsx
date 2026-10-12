@@ -34,11 +34,11 @@ const perspectives = [
 ];
 
 const faqs = [
-  { q: "Is ClubSheet free to use?",                        a: "The core platform is free to get started. Modules like Finance, Medical, and Academy are add-ons you can plug in as your club grows.", votes: 84 },
-  { q: "Do I need technical knowledge to set up my club?", a: "Not at all. ClubSheet is designed for club administrators, not developers. You can have your club running in minutes.",                votes: 61 },
-  { q: "Can I manage multiple teams in one club?",         a: "Yes. ClubSheet is built for multi-team organisations. Each team has its own space while everything stays connected at the club level.", votes: 53 },
+  { q: "Is PitchWork free to use?",                        a: "The core platform is free to get started. Modules like Finance, Medical, and Academy are add-ons you can plug in as your club grows.", votes: 84 },
+  { q: "Do I need technical knowledge to set up my club?", a: "Not at all. PitchWork is designed for club administrators, not developers. You can have your club running in minutes.",                votes: 61 },
+  { q: "Can I manage multiple teams in one club?",         a: "Yes. PitchWork is built for multi-team organisations. Each team has its own space while everything stays connected at the club level.", votes: 53 },
   { q: "How does access control work?",                    a: "You assign roles — Admin, Coach, Athlete, Staff, Guardian — and each role sees only what they need. Fine-grained permissions keep sensitive data safe.", votes: 47 },
-  { q: "Can athletes and coaches use ClubSheet on mobile?", a: "Yes. ClubSheet is fully responsive and works on any device. No app download required.",                                               votes: 39 },
+  { q: "Can athletes and coaches use PitchWork on mobile?", a: "Yes. PitchWork is fully responsive and works on any device. No app download required.",                                               votes: 39 },
   { q: "What happens to my data?",                        a: "Your club data belongs to you. We never sell it or share it with third parties. You can export or delete it at any time.",               votes: 35 },
 ];
 
@@ -49,7 +49,7 @@ export function WhoSection() {
   return (
     <div className="max-w-4xl mx-auto flex flex-col items-center gap-10">
       <div className="text-center flex flex-col gap-2">
-        <h2 className="text-xl font-bold text-zinc-900 tracking-tight">Who uses ClubSheet?</h2>
+        <h2 className="text-xl font-bold text-zinc-900 tracking-tight">Who uses PitchWork?</h2>
         <p className="text-zinc-500 text-xs">Every role gets exactly what they need.</p>
       </div>
 
@@ -145,7 +145,7 @@ export function FaqSection() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!question.trim() || !email.trim()) return;
-    window.location.href = `mailto:hello@clubsheet.io?subject=Question from ${encodeURIComponent(email)}&body=${encodeURIComponent(question)}`;
+    window.location.href = `mailto:hello@pitchwork.io?subject=Question from ${encodeURIComponent(email)}&body=${encodeURIComponent(question)}`;
     setSent(true);
     setTimeout(() => {
       setModalOpen(false);
@@ -279,7 +279,7 @@ export function FaqSection() {
                     rows={4}
                     value={question}
                     onChange={(e) => setQuestion(e.target.value)}
-                    placeholder="What would you like to know about ClubSheet?"
+                    placeholder="What would you like to know about PitchWork?"
                     className="bg-quaternary border border-secondary rounded-xl px-3.5 py-2 text-xs text-zinc-800 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary transition-all resize-none"
                   />
                 </div>

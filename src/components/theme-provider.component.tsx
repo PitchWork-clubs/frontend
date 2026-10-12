@@ -17,7 +17,7 @@ import {
 
 export const ThemeContext = createContext<ThemeContextValue | null>(null);
 
-const THEME_COOKIE_NAME = "clubsheet_theme_mode";
+const THEME_COOKIE_NAME = "pitchwork_theme_mode";
 const useIsomorphicLayoutEffect = typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
 function getCookie(name: string): string | null {

@@ -51,7 +51,7 @@ export function normalizeBrandColors(brand?: ClubBrand): Required<ClubBrand> {
   const rawSecondary = brand?.secondary?.trim();
   const rawTertiary = brand?.tertiary?.trim();
 
-  // Case 0: No colors supplied -> fallback to ClubSheet default brand
+  // Case 0: No colors supplied -> fallback to PitchWork default brand
   if (!rawPrimary) {
     return {
       primary: DEFAULT_CLUBSHEET_BRAND.primary!,

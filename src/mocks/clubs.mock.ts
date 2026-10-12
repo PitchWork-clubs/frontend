@@ -8,7 +8,7 @@ export interface Club {
   logo?: string;
   /**
    * Optional club branding / kit colours.
-   * If omitted, falls back to the default ClubSheet brand palette.
+   * If omitted, falls back to the default PitchWork brand palette.
    */
   brand?: ClubBrand;
 }

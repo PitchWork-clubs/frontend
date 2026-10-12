@@ -7,7 +7,7 @@ import type { ClubBrand } from "@/types/theme.types";
 export const DARK_MODE_ENABLED = false;
 
 /**
- * Default ClubSheet brand palette used when no custom club branding is provided.
+ * Default PitchWork brand palette used when no custom club branding is provided.
  */
 export const DEFAULT_CLUBSHEET_BRAND: ClubBrand = {
   primary: "#005F31", // Forest Green
@@ -50,8 +50,8 @@ export interface KitPalettePreset {
  */
 export const KIT_PRESETS: KitPalettePreset[] = [
   {
-    id: "default-clubsheet",
-    name: "ClubSheet Classic",
+    id: "default-pitchwork",
+    name: "PitchWork Classic",
     description: "Original emerald green and sage",
     brand: DEFAULT_CLUBSHEET_BRAND,
   },

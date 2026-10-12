@@ -150,7 +150,7 @@ export interface EventData {
   date: string;        // ISO string
   location?: string;
   description?: string;
-  linkedEventId?: string; // future integration with ClubSheet scheduling
+  linkedEventId?: string; // future integration with PitchWork scheduling
   responses: Record<MemberId, EventResponse>;
 }
 

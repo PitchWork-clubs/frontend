@@ -20,12 +20,12 @@ export default function NotFound() {
         <Link href="/" className="flex items-center gap-2.5 hover:opacity-90 transition-opacity">
           <Image
             src="/images/logo-light-clip.jpeg"
-            alt="ClubSheet Logo"
+            alt="PitchWork Logo"
             width={32}
             height={32}
             className="rounded-lg shadow-xs"
           />
-          <span className="text-lg font-bold text-primary tracking-tight">ClubSheet</span>
+          <span className="text-lg font-bold text-primary tracking-tight">PitchWork</span>
         </Link>
 
         <Link
@@ -74,7 +74,7 @@ export default function NotFound() {
 
       {/* Footer Note */}
       <footer className="relative z-10 text-center text-zinc-400 text-xs py-2">
-        <p>&copy; {new Date().getFullYear()} ClubSheet. Run your club with clarity.</p>
+        <p>&copy; {new Date().getFullYear()} PitchWork. Run your club with clarity.</p>
       </footer>
     </div>
   );

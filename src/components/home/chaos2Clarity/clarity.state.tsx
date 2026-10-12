@@ -75,7 +75,7 @@ export function ClarityState({ containerRef, chromeRef }: ClarityStateProps) {
             <div className="h-2.5 w-2.5 rounded-full bg-zinc-300" />
           </div>
           <div className="flex-1 bg-white/70 rounded px-3 py-1 text-[0.625rem] text-zinc-400 font-mono border border-secondary/60">
-            app.clubsheet.io/overview
+            app.pitchwork.io/overview
           </div>
         </div>
 
@@ -83,7 +83,7 @@ export function ClarityState({ containerRef, chromeRef }: ClarityStateProps) {
         <div className="relative z-20 flex items-center justify-between px-5 py-2 border-b border-secondary/60 bg-white shrink-0">
           <div className="flex items-center gap-2">
             <div className="h-5 w-5 rounded bg-primary" />
-            <span className="font-bold text-primary text-xs tracking-tight">ClubSheet</span>
+            <span className="font-bold text-primary text-xs tracking-tight">PitchWork</span>
           </div>
           <nav className="flex items-center gap-5 text-[0.6875rem] text-zinc-500 font-medium">
             <span className="text-primary font-semibold border-b border-primary pb-0.5">Overview</span>

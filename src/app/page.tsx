@@ -110,7 +110,7 @@ export default function Home() {
           </div>
 
           <div className="mt-8 w-full max-w-2xl translate-y-2 overflow-hidden rounded-2xl home-brand-shadow-frame transition-transform duration-300 hover:scale-[1.02] cursor-default lg:mt-0 lg:translate-y-5">
-            <Image src="/images/hero-image.jpeg" alt="ClubSheet dashboard" width={1360} height={768} className="h-auto max-h-[calc(100svh-12rem)] w-full rounded-2xl object-contain" />
+            <Image src="/images/hero-image.jpeg" alt="PitchWork dashboard" width={1360} height={768} className="h-auto max-h-[calc(100svh-12rem)] w-full rounded-2xl object-contain" />
           </div>
 
           <div
@@ -224,7 +224,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Who uses ClubSheet */}
+      {/* Who uses PitchWork */}
       <section id="who" className="w-full bg-quaternary py-20 px-6">
         <WhoSection />
       </section>
@@ -292,8 +292,8 @@ export default function Home() {
 
             <div className="col-span-2 sm:col-span-2 flex flex-col gap-4">
               <div className="flex items-center gap-2">
-                <Image src="/images/logo-dark-clip.jpeg" alt="ClubSheet" width={20} height={15} className="rounded-sm opacity-90" style={{ objectFit: 'contain' }} />
-                <span className="text-white font-bold text-xs tracking-tight">ClubSheet</span>
+                <Image src="/images/logo-dark-clip.jpeg" alt="PitchWork" width={20} height={15} className="rounded-sm opacity-90" style={{ objectFit: 'contain' }} />
+                <span className="text-white font-bold text-xs tracking-tight">PitchWork</span>
               </div>
               <p className="text-[0.65rem] leading-relaxed max-w-68">
                 The modern management platform for football clubs and academies. Athletes, coaches, training, finances — all in one place.
@@ -331,7 +331,7 @@ export default function Home() {
           </div>
 
           <div className="pt-5 flex flex-col sm:flex-row items-center justify-between gap-2">
-            <p className="text-[0.6rem]">&copy; 2025 ClubSheet. All rights reserved.</p>
+            <p className="text-[0.6rem]">&copy; 2025 PitchWork. All rights reserved.</p>
             <p className="text-[0.6rem]">Made for clubs that mean business.</p>
           </div>
         </div>
