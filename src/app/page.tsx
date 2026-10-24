@@ -2,21 +2,19 @@
 import { Suspense } from "react";
 import {
   BadgeCheck, Briefcase, History, KeyRound,
-  TrendingUp, User, Users, Shield, Dumbbell,
+  User, Users, Shield, Dumbbell,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import InfiniteMarquee from "@/components/home/infiniteMarquee";
 import Chaos2ClaritySection from "@/components/home/chaos2Clarity.section";
 import { FaqSection, WhoSection } from "@/components/home/home.section";
-import { HomeNavbar } from "@/components/home/home.navbar";
+import { HomeV2Navbar } from "@/components/home/home-v2.navbar";
+import { HeroV2Section } from "@/components/home/hero-v2.section";
+import { RealitySection } from "@/components/home/reality.section";
+import { PrinciplesSection } from "@/components/home/principles.section";
+import "@/components/home/home-v2.css";
 
-const avatarLinks = [
-  "https://images.unsplash.com/photo-1615109398623-88346a601842?ixid=M3w4MjcwNjd8MHwxfHNlYXJjaHwxfHxodW1hbnxlbnwwfHx8fDE3ODc1NzY5NDZ8MA&ixlib=rb-4.1.0&fit=max&q=80",
-  "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixid=M3w4MjcwNjd8MHwxfHNlYXJjaHw2fHxodW1hbnxlbnwwfHx8fDE3ODc1NzY5NDZ8MA&ixlib=rb-4.1.0&fit=max&q=80",
-  "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixid=M3w4MjcwNjd8MHwxfHNlYXJjaHw3fHxodW1hbnxlbnwwfHx8fDE3ODc1NzY5NDZ8MA&ixlib=rb-4.1.0&fit=max&q=80",
-  "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixid=M3w4MjcwNjd8MHwxfHNlYXJjaHwxMHx8aHVtYW58ZW58MHx8fHwxNzg3NTc2OTQ2fDA&ixlib=rb-4.1.0&fit=max&q=80",
-];
 
 const starterItems = [
   { label: "Athletes & Squads",    icon: Users },
@@ -31,102 +29,15 @@ const starterItems = [
 
 export default function Home() {
   return (
-    <div className="home-page bg-quaternary">
+    <div className="home-v2-root">
 
-      <HomeNavbar />
+      <HomeV2Navbar />
 
-      {/* Hero */}
-      <section id="hero" className="flex min-h-[calc(100svh-4rem)] w-full flex-col overflow-hidden lg:flex-row">
-        <div className="flex min-w-0 flex-1 flex-col justify-center px-6 py-10 sm:px-10 lg:pl-13 lg:pr-6 lg:py-8 left-home-hero-section">
-          <div className="inline-flex w-max items-center gap-2 bg-secondary rounded-[.4rem] px-3 py-1.5">
-            <div className="h-[.6rem] w-[.6rem] bg-primary rounded-full shrink-0 animate-swell" />
-            <span className="font-semibold text-[.65rem] leading-none text-zinc-700">NEW PLATFORM UPDATE</span>
-          </div>
+      <HeroV2Section />
 
-          <div className="pt-10">
-            <span className="text-3xl block font-bold text-zinc-900">Run your club with</span>
-            <span className="text-3xl block text-primary font-bold pt-3">clarity.</span>
-            <span className="block w-full max-w-md pt-8 text-sm leading-relaxed text-zinc-700 sm:w-2/3">
-              The modern management platform for football clubs and academies. Organise athletes, staff, and schedules in one place.
-            </span>
-          </div>
+      <RealitySection />
 
-          <div className="flex flex-wrap gap-3 pt-10 pb-4">
-            <Link
-              href="/register"
-              className="bg-primary text-white text-xs font-semibold px-5 py-2.5 rounded-xl hover:bg-tertiary hover:-translate-y-0.5 transition-all shadow-sm hover:shadow-lg"
-            >
-              Get Started Free
-            </Link>
-            <Link
-              href="#features"
-              className="px-5 py-2.5 rounded-xl bg-white border border-secondary text-xs font-semibold text-zinc-700 hover:border-primary hover:text-primary hover:-translate-y-0.5 transition-all shadow-sm"
-            >
-              See How It Works
-            </Link>
-          </div>
-
-          <div className="flex flex-wrap items-center gap-4 pt-8 pb-8">
-            <div className="flex -space-x-3 items-center">
-              {avatarLinks.map((avatar, ndx) => (
-                <div
-                  key={ndx}
-                  className="relative h-7 w-7 rounded-full border-2 border-white overflow-hidden shrink-0 animate-wave"
-                  style={{ zIndex: avatarLinks.length - ndx, animationDelay: `${ndx * 0.2}s` }}
-                >
-                  <Image src={avatar} alt={`Avatar ${ndx}`} fill sizes="28px" className="object-cover" />
-                </div>
-              ))}
-            </div>
-            <span className="text-xs text-zinc-600">Trusted by 500+ modern football clubs</span>
-          </div>
-        </div>
-
-        <div className="relative hidden flex-1 items-center px-6 py-8 sm:px-10 lg:flex lg:py-8 lg:pl-6 lg:pr-12 right-home-hero-section">
-          <div
-            className="absolute -left-30 z-20 bg-white/95 backdrop-blur-md p-3 rounded-2xl home-brand-shadow-card border border-secondary flex items-center gap-3 animate-wave hover:scale-105 transition-transform cursor-default"
-            style={{ animationDelay: ".3s" }}
-          >
-            <svg width={36} height={36} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary">
-              <polygon points="12 2 20.66 7 20.66 17 12 22 3.34 17 3.34 7" />
-              <polygon points="12 6 18 9 16 15 12 18 6 15 8 9" opacity="0.4" fill="currentColor" />
-              <line x1="12" y1="12" x2="12" y2="2" /><line x1="12" y1="12" x2="20.66" y2="7" />
-              <line x1="12" y1="12" x2="20.66" y2="17" /><line x1="12" y1="12" x2="12" y2="22" />
-              <line x1="12" y1="12" x2="3.34" y2="17" /><line x1="12" y1="12" x2="3.34" y2="7" />
-            </svg>
-            <div>
-              <h4 className="text-xs font-bold text-zinc-900">Athlete stats</h4>
-              <p className="text-xs text-zinc-500">Goals: 12 · Assists: 5</p>
-            </div>
-          </div>
-
-          <div className="absolute top-30 right-32 z-20 bg-white/95 backdrop-blur-md p-3 rounded-2xl home-brand-shadow-card border border-secondary flex flex-col items-center gap-2 animate-wave hover:scale-105 transition-transform cursor-default">
-            <span className="text-[0.6rem] font-semibold text-zinc-500 uppercase tracking-wider">Next Match</span>
-            <div className="flex items-center gap-2">
-              <div className="w-7 h-7 rounded-full bg-primary flex items-center justify-center text-white font-bold text-[0.6rem]">CS</div>
-              <span className="text-[0.6rem] text-zinc-400 font-bold">VS</span>
-              <div className="w-7 h-7 rounded-full bg-secondary flex items-center justify-center text-zinc-600 font-bold text-[0.6rem]">MA</div>
-            </div>
-          </div>
-
-          <div className="mt-8 w-full max-w-2xl translate-y-2 overflow-hidden rounded-2xl home-brand-shadow-frame transition-transform duration-300 hover:scale-[1.02] cursor-default lg:mt-0 lg:translate-y-5">
-            <Image src="/images/hero-image.jpeg" alt="PitchWork dashboard" width={1360} height={768} className="h-auto max-h-[calc(100svh-12rem)] w-full rounded-2xl object-contain" />
-          </div>
-
-          <div
-            className="absolute bottom-0 -left-8 z-20 bg-white/95 backdrop-blur-md p-3 rounded-2xl home-brand-shadow-card border border-secondary flex items-center gap-3 animate-wave hover:scale-105 transition-transform cursor-default"
-            style={{ animationDelay: ".2s" }}
-          >
-            <div className="w-8 h-8 rounded-full bg-quinary flex items-center justify-center text-primary">
-              <TrendingUp className="w-4 h-4" />
-            </div>
-            <div>
-              <h4 className="text-xs font-bold text-zinc-900">Squad Availability</h4>
-              <p className="text-[0.65rem] font-semibold text-primary">+12% this month</p>
-            </div>
-          </div>
-        </div>
-      </section>
+      <PrinciplesSection />
 
       {/* Marquee */}
       <section className="my-0 w-full max-w-full min-w-0 overflow-hidden sm:my-8">
