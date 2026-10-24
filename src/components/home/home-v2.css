@@ -1,0 +1,168 @@
+
+/* ─── Design tokens ──────────────────────────────────────────────────────────
+ * Scoped to .home-v2-root to stay isolated from the dashboard system.
+ * The dashboard uses its own --color-* tokens from globals.css.
+ */
+.home-v2-root {
+  --v2-pitch:      #163b2d;
+  --v2-forest:     #244f3b;
+  --v2-sage:       #91ad83;
+  --v2-sage-light: #bed0b5;
+  --v2-ivory:      #f4f2e9;
+  --v2-paper:      #e9e7dc;
+  --v2-ink:        #17362b;
+  --v2-muted:      #68736d;
+  --v2-white-line: rgba(244, 242, 233, 0.18);
+}
+
+.home-v2-root ::selection {
+  color: var(--v2-pitch);
+  background: var(--v2-sage);
+}
+
+/* ─── Brand mark ─────────────────────────────────────────────────────────────
+ * Circle with two arc segments cut from the sides + a centre dot.
+ * Pure pseudo-element geometry — can't be expressed with Tailwind.
+ */
+.home-v2-brand-mark {
+  position: relative;
+  display: inline-block;
+  flex-shrink: 0;
+  width: 1.375rem;
+  height: 1.375rem;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+}
+.home-v2-brand-mark::before,
+.home-v2-brand-mark::after {
+  position: absolute;
+  top: 50%;
+  width: 0.28rem;
+  height: 0.56rem;
+  content: '';
+  border: 1px solid currentColor;
+  transform: translateY(-50%);
+}
+.home-v2-brand-mark::before { left: -1px;  border-left: 0; }
+.home-v2-brand-mark::after  { right: -1px; border-right: 0; }
+.home-v2-brand-mark i {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0.28rem;
+  height: 0.28rem;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* ─── Navbar: layout calculation ─────────────────────────────────────────────
+ * The header is absolutely positioned and centred with a max-width.
+ * min() + translateX can't be expressed cleanly in Tailwind.
+ */
+.home-v2-header {
+  width: min(100% - 5rem, 88rem);
+  transform: translateX(-50%);
+}
+
+/* ─── Mobile nav: transition state ──────────────────────────────────────────
+ * The open/close toggle relies on opacity + translateY transitions
+ * driven by a JS-toggled modifier class — needs CSS state classes.
+ */
+.home-v2-mobile-nav {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-8px);
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+.home-v2-mobile-nav--open {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+/* ─── Hero section ───────────────────────────────────────────────────────────
+ * min-height: 100svh is available in Tailwind (min-h-svh) but the
+ * padding-top is calculated from the absolute header height token, so
+ * keeping the hero block together here is cleaner.
+ */
+.hero-v2 {
+  /* Header height — keep in sync with the h-[5.75rem] on .home-v2-header */
+  padding-top: 5.75rem;
+  background-color: var(--v2-pitch);
+  color: var(--v2-ivory);
+}
+
+/* ─── Pitch stripe texture ───────────────────────────────────────────────────
+ * Multi-layer gradient + mask-image. Not expressible in Tailwind.
+ *
+ * Layer 1 & 2: faint square grid overlay.
+ * Layer 3: repeating horizontal bands (mown-grass alternation).
+ * mask-image: fades the whole texture out before the bottom of the section
+ * so the next section emerges from clean flat green.
+ */
+.hero-v2-grid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    repeating-linear-gradient(
+      180deg,
+      transparent            0,
+      transparent            2.25rem,
+      rgba(255, 255, 255, 0.028) 2.25rem,
+      rgba(255, 255, 255, 0.028) 4.5rem
+    );
+
+  background-size:
+    5rem 5rem,
+    5rem 5rem,
+    100% 4.5rem;
+
+  mask-image: linear-gradient(to bottom, black 0%, black 50%, transparent 78%);
+  -webkit-mask-image: linear-gradient(to bottom, black 0%, black 50%, transparent 78%);
+}
+
+/* ─── Headline: fluid type + child em colour ─────────────────────────────────
+ * clamp() for fluid type and an em child selector — both require CSS.
+ */
+.hero-v2-headline {
+  font-size: clamp(2.75rem, 6.5vw, 5.25rem);
+}
+.hero-v2-headline em {
+  font-style: italic;
+  color: var(--v2-sage-light);
+}
+
+/* ─── Responsive overrides ───────────────────────────────────────────────────
+ * Only overrides that use calc() or affect the CSS-owned rules above.
+ * Layout-only responsive changes (hiding nav, stacking buttons) are
+ * handled by Tailwind responsive prefixes in the component files.
+ */
+@media (max-width: 900px) {
+  .home-v2-header {
+    width: calc(100% - 2.5rem);
+  }
+  .hero-v2 {
+    padding-top: 4.75rem; /* matches the shorter mobile header height */
+  }
+  .hero-v2-headline {
+    font-size: clamp(2.25rem, 8vw, 3.5rem);
+  }
+}
+
+@media (max-width: 640px) {
+  .home-v2-header {
+    width: calc(100% - 2rem);
+  }
+  .hero-v2-headline {
+    font-size: clamp(1.875rem, 9vw, 2.625rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-v2-mobile-nav { transition: none; }
+}

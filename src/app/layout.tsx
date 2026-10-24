@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Manrope, Newsreader } from "next/font/google";
 import { cookies } from "next/headers";
 import Script from "next/script";
 import type { CSSProperties } from "react";
@@ -23,6 +23,19 @@ const geistSans = Geist({
   subsets: ["latin"],
 });
 
+const manrope = Manrope({
+  variable: "--font-manrope",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+const newsreader = Newsreader({
+  variable: "--font-newsreader",
+  subsets: ["latin"],
+  style: ["normal", "italic"],
+  display: "swap",
+});
+
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
@@ -31,6 +44,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "PitchWork - Club Management Platform",
   description: "A modern management platform designed specifically for football clubs and academies",
+  other: {
+    "darkreader-lock": "true",
+  },
   icons: {
     icon: DARK_MODE_ENABLED
       ? [
@@ -117,7 +133,7 @@ export default async function RootLayout({
       suppressHydrationWarning
       data-initial-club-id={initialClubId}
       style={initialThemeStyle}
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${manrope.variable} ${newsreader.variable} h-full antialiased`}
     >
       <BodyScrollArea className="min-h-full flex flex-col overflow-x-hidden bg-background text-foreground">
         <ThemedTopLoader />

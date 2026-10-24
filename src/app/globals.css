@@ -56,6 +56,17 @@
   --color-primary-muted: var(--color-primary-muted);
   --color-primary-foreground: var(--color-primary-foreground);
 
+  /* V2 Landing Page Tokens */
+  --color-v2-pitch: #163b2d;
+  --color-v2-forest: #244f3b;
+  --color-v2-sage: #91ad83;
+  --color-v2-sage-light: #bed0b5;
+  --color-v2-ivory: #f4f2e9;
+  --color-v2-paper: #e9e7dc;
+  --color-v2-ink: #17362b;
+  --color-v2-muted: #68736d;
+  --color-v2-white-line: rgba(244, 242, 233, 0.18);
+
   --color-secondary: var(--color-secondary);
   --color-secondary-hover: var(--color-secondary-hover);
   --color-secondary-foreground: var(--color-secondary-foreground);
