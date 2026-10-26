@@ -36,8 +36,8 @@ export function PrinciplesSection() {
     <section className="w-full bg-quaternary py-20 px-6">
       <div className="max-w-4xl mx-auto flex flex-col gap-10">
         <div className="flex flex-col gap-2">
-          <h2 className="text-2xl font-bold text-foreground tracking-tight">Built on four principles.</h2>
-          <p className="text-muted-foreground text-sm">Every part of Pitchwork answers one simple question about your club.</p>
+          <h2 className="text-3xl font-bold text-foreground tracking-tight">Built on four principles.</h2>
+          <p className="text-muted-foreground text-base">Every part of Pitchwork answers one simple question about your club.</p>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 border border-border rounded-xl overflow-hidden">
@@ -46,18 +46,16 @@ export function PrinciplesSection() {
               key={p.title}
               className={[
                 "flex flex-col gap-3 p-7 bg-card",
-                // right border for left-column cards
                 i % 2 === 0 ? "sm:border-r border-border" : "",
-                // bottom border for top-row cards
                 i < 2 ? "border-b border-border" : "",
               ].join(" ")}
             >
               <div className="flex items-start justify-between gap-4">
-                <h3 className="text-lg font-bold text-foreground tracking-tight">{p.title}</h3>
-                <span className="text-xs font-mono text-muted-foreground shrink-0 mt-1">{p.number}</span>
+                <h3 className="text-xl font-bold text-foreground tracking-tight">{p.title}</h3>
+                <span className="text-sm font-mono text-muted-foreground shrink-0 mt-1">{p.number}</span>
               </div>
-              <p className="text-xs font-semibold text-primary">{p.question}</p>
-              <p className="text-sm text-muted-foreground leading-relaxed">{p.desc}</p>
+              <p className="text-sm font-semibold text-primary">{p.question}</p>
+              <p className="text-base text-muted-foreground leading-relaxed">{p.desc}</p>
             </div>
           ))}
         </div>
@@ -97,10 +95,10 @@ export function RightSizeSection() {
         {/* Left: copy + stats */}
         <div className="flex flex-col gap-8">
           <div className="flex flex-col gap-4">
-            <h2 className="text-2xl font-bold text-primary-foreground tracking-tight leading-snug">
+            <h2 className="text-3xl font-bold text-primary-foreground tracking-tight leading-snug">
               Use what your club needs. Add the rest later.
             </h2>
-            <p className="text-sm text-primary-foreground/70 leading-relaxed max-w-sm">
+            <p className="text-base text-primary-foreground/70 leading-relaxed max-w-sm">
               A grassroots club sees teams, training, matches and attendance — not transfer negotiations
               or salary structures. As you grow, Pitchwork grows with you.
             </p>
@@ -109,8 +107,8 @@ export function RightSizeSection() {
           <div className="border-t border-primary-foreground/20 pt-8 flex items-end gap-10">
             {scaleLevels.map(({ count, label }) => (
               <div key={label} className="flex flex-col gap-1">
-                <span className="text-3xl font-bold text-primary-foreground leading-none">{count}</span>
-                <span className="text-xs text-primary-foreground/55">{label}</span>
+                <span className="text-4xl font-bold text-primary-foreground leading-none">{count}</span>
+                <span className="text-sm text-primary-foreground/55">{label}</span>
               </div>
             ))}
           </div>
@@ -122,7 +120,7 @@ export function RightSizeSection() {
             <span
               key={label}
               className={[
-                "px-4 py-2 rounded-lg text-xs font-semibold border transition-none",
+                "px-4 py-2 rounded-lg text-sm font-semibold border transition-none",
                 highlight
                   ? "bg-accent/20 border-accent/50 text-primary-foreground"
                   : "bg-transparent border-primary-foreground/20 text-primary-foreground/60",
@@ -137,6 +135,9 @@ export function RightSizeSection() {
     </section>
   );
 }
+
+// ─── Who Section ─────────────────────────────────────────────────────────────
+
 import { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { ScrollArea } from "@/components/ScrollArea";
@@ -185,8 +186,8 @@ export function WhoSection() {
   return (
     <div className="max-w-4xl mx-auto flex flex-col items-center gap-10">
       <div className="text-center flex flex-col gap-2">
-        <h2 className="text-xl font-bold text-zinc-900 tracking-tight">Who uses PitchWork?</h2>
-        <p className="text-zinc-500 text-xs">Every role gets exactly what they need.</p>
+        <h2 className="text-2xl font-bold text-zinc-900 tracking-tight">Who uses PitchWork?</h2>
+        <p className="text-zinc-500 text-sm">Every role gets exactly what they need.</p>
       </div>
 
       <div className="flex flex-wrap justify-center gap-2">
@@ -194,7 +195,7 @@ export function WhoSection() {
           <button
             key={p.role}
             onClick={() => setActive(i)}
-            className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all ${
+            className={`px-4 py-1.5 rounded-full text-sm font-semibold transition-all ${
               active === i
                 ? "bg-primary text-white shadow-md"
                 : "bg-quinary border border-secondary text-zinc-600 hover:border-primary hover:text-primary"
@@ -207,13 +208,13 @@ export function WhoSection() {
 
       <div className="w-full bg-quinary border border-secondary rounded-2xl p-6 flex flex-col gap-5">
         <div className="flex flex-col gap-1.5">
-          <span className="text-[0.6rem] font-mono font-bold text-primary uppercase tracking-widest">{current.role}</span>
-          <p className="text-zinc-700 text-xs leading-relaxed">{current.desc}</p>
+          <span className="text-xs font-mono font-bold text-primary uppercase tracking-widest">{current.role}</span>
+          <p className="text-zinc-700 text-sm leading-relaxed">{current.desc}</p>
         </div>
         <ul className="grid grid-cols-1 gap-1.5 sm:grid-cols-2">
           {current.points.map((pt) => (
-            <li key={pt} className="flex items-center gap-2 text-xs text-zinc-600">
-              <svg className="w-3 h-3 text-primary shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <li key={pt} className="flex items-center gap-2 text-sm text-zinc-600">
+              <svg className="w-3.5 h-3.5 text-primary shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
               </svg>
               {pt}
@@ -225,7 +226,8 @@ export function WhoSection() {
   );
 }
 
-// FAQ — collapsible + vote count + ask your own question modal 
+// ─── FAQ Section ─────────────────────────────────────────────────────────────
+
 export function FaqSection() {
   const [open, setOpen]           = useState<number | null>(null);
   const [votes, setVotes]         = useState<number[]>(faqs.map((f) => f.votes));
@@ -238,7 +240,6 @@ export function FaqSection() {
   const triggerRef     = useRef<HTMLButtonElement>(null);
   const didMountRef    = useRef(false);
 
-  // Initialise modal state from URL param on first render — avoids setState-in-effect
   const [modalOpen, setModalOpen] = useState(() => searchParams.get("ask") === "true");
 
   const scrollToTrigger = () => {
@@ -251,7 +252,6 @@ export function FaqSection() {
     scrollToTrigger();
   };
 
-  // On mount: if modal opened from URL param, scroll to the trigger button
   useEffect(() => {
     if (modalOpen) {
       scrollToTrigger();
@@ -260,7 +260,6 @@ export function FaqSection() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Sync URL param whenever modal state changes — skip initial mount
   useEffect(() => {
     if (!didMountRef.current) return;
     const url = new URL(window.location.href);
@@ -295,40 +294,38 @@ export function FaqSection() {
     <div className="w-full bg-quaternary py-24 px-6">
       <div className="max-w-3xl mx-auto flex flex-col gap-10">
         <div className="text-center flex flex-col gap-2">
-          <h2 className="text-xl font-bold text-zinc-900 tracking-tight">Questions clubs ask</h2>
-          <p className="text-zinc-500 text-xs">Straight answers. No fluff.</p>
+          <h2 className="text-2xl font-bold text-zinc-900 tracking-tight">Questions clubs ask</h2>
+          <p className="text-zinc-500 text-sm">Straight answers. No fluff.</p>
         </div>
 
-        {/* Accordion — vote and expand are separate elements, never nested buttons */}
         <div className="flex flex-col gap-3">
           {faqs.map((faq, i) => (
             <div
               key={i}
               className="bg-quinary border border-secondary rounded-2xl overflow-hidden hover:border-primary/40 transition-colors"
             >
-              {/* Row: not a button itself — children are the interactive elements */}
               <div className="flex items-center gap-3 px-5 py-4">
                 <button
                   className="flex-1 text-left flex items-center gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded"
                   onClick={() => setOpen(open === i ? null : i)}
                   aria-expanded={open === i}
                 >
-                  <span className="font-semibold text-zinc-900 text-xs flex-1">{faq.q}</span>
+                  <span className="font-semibold text-zinc-900 text-sm flex-1">{faq.q}</span>
                   <ChevronDown
-                    className={`w-3.5 h-3.5 text-primary shrink-0 transition-transform duration-200 ${open === i ? "rotate-180" : ""}`}
+                    className={`w-4 h-4 text-primary shrink-0 transition-transform duration-200 ${open === i ? "rotate-180" : ""}`}
                   />
                 </button>
                 <button
                   onClick={() => handleVote(i)}
                   title={voted.has(i) ? "Already voted" : "This question helped me too"}
-                  className={`flex items-center gap-1 text-[0.6rem] font-mono px-2 py-1 rounded-full border transition-all shrink-0 ${
+                  className={`flex items-center gap-1 text-xs font-mono px-2 py-1 rounded-full border transition-all shrink-0 ${
                     voted.has(i)
                       ? "bg-quinary border-primary text-primary"
                       : "border-secondary text-zinc-400 hover:border-primary hover:text-primary"
                   }`}
                   aria-label="This question helped me"
                 >
-                  <svg className="w-2.5 h-2.5" fill={voted.has(i) ? "currentColor" : "none"} viewBox="0 0 24 24" stroke="currentColor">
+                  <svg className="w-3 h-3" fill={voted.has(i) ? "currentColor" : "none"} viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
                   </svg>
                   {votes[i]}
@@ -336,7 +333,7 @@ export function FaqSection() {
               </div>
               {open === i && (
                 <div className="px-5 pb-4 border-t border-secondary/50">
-                  <p className="text-xs text-zinc-600 leading-relaxed pt-3">{faq.a}</p>
+                  <p className="text-sm text-zinc-600 leading-relaxed pt-3">{faq.a}</p>
                 </div>
               )}
             </div>
@@ -345,15 +342,15 @@ export function FaqSection() {
 
         <div className="bg-quinary border border-secondary rounded-2xl p-6 flex items-center justify-between gap-5">
           <div className="flex flex-col gap-1">
-            <h3 className="font-bold text-zinc-900 text-xs">Don&apos;t see your question?</h3>
-            <p className="text-xs text-zinc-500">Send it to us — we read every message.</p>
+            <h3 className="font-bold text-zinc-900 text-sm">Don&apos;t see your question?</h3>
+            <p className="text-sm text-zinc-500">Send it to us — we read every message.</p>
           </div>
           <button
             ref={triggerRef}
             onClick={openModal}
-            className="shrink-0 bg-primary text-white px-4 py-2 rounded-xl font-semibold text-xs flex items-center gap-1.5 hover:bg-tertiary hover:-translate-y-0.5 transition-all shadow-sm hover:shadow-md"
+            className="shrink-0 bg-primary text-white px-4 py-2 rounded-xl font-semibold text-sm flex items-center gap-1.5 hover:bg-tertiary hover:-translate-y-0.5 transition-all shadow-sm hover:shadow-md"
           >
-            <Send className="w-3.5 h-3.5" />
+            <Send className="w-4 h-4" />
             Ask a question
           </button>
         </div>
@@ -368,8 +365,8 @@ export function FaqSection() {
           <ScrollArea className="max-h-[calc(100dvh-2rem)] w-full max-w-md rounded-2xl home-brand-shadow-modal border border-secondary bg-white p-7 flex flex-col gap-5">
             <div className="flex items-start justify-between gap-4">
               <div className="flex flex-col gap-1">
-                <h3 className="font-bold text-zinc-900 text-sm">Ask us anything</h3>
-                <p className="text-xs text-zinc-500">We&apos;ll reply to your email directly.</p>
+                <h3 className="font-bold text-zinc-900 text-base">Ask us anything</h3>
+                <p className="text-sm text-zinc-500">We&apos;ll reply to your email directly.</p>
               </div>
               <button
                 onClick={() => closeModal()}
@@ -383,8 +380,8 @@ export function FaqSection() {
             </div>
 
             {sent ? (
-              <div className="flex items-center gap-2 text-xs text-primary font-medium py-3">
-                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <div className="flex items-center gap-2 text-sm text-primary font-medium py-3">
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
                 </svg>
                 Question sent. We&apos;ll get back to you soon.
@@ -392,7 +389,7 @@ export function FaqSection() {
             ) : (
               <form onSubmit={handleSubmit} className="flex flex-col gap-3.5">
                 <div className="flex flex-col gap-1.5">
-                  <label htmlFor="ask-email" className="text-[0.6rem] font-semibold text-zinc-700 uppercase tracking-wider">
+                  <label htmlFor="ask-email" className="text-xs font-semibold text-zinc-700 uppercase tracking-wider">
                     Your email
                   </label>
                   <input
@@ -402,11 +399,11 @@ export function FaqSection() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="you@yourclub.com"
-                    className="bg-quaternary border border-secondary rounded-xl px-3.5 py-2 text-xs text-zinc-800 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary transition-all"
+                    className="bg-quaternary border border-secondary rounded-xl px-3.5 py-2 text-sm text-zinc-800 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary transition-all"
                   />
                 </div>
                 <div className="flex flex-col gap-1.5">
-                  <label htmlFor="ask-question" className="text-[0.6rem] font-semibold text-zinc-700 uppercase tracking-wider">
+                  <label htmlFor="ask-question" className="text-xs font-semibold text-zinc-700 uppercase tracking-wider">
                     Your question
                   </label>
                   <textarea
@@ -416,14 +413,14 @@ export function FaqSection() {
                     value={question}
                     onChange={(e) => setQuestion(e.target.value)}
                     placeholder="What would you like to know about PitchWork?"
-                    className="bg-quaternary border border-secondary rounded-xl px-3.5 py-2 text-xs text-zinc-800 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary transition-all resize-none"
+                    className="bg-quaternary border border-secondary rounded-xl px-3.5 py-2 text-sm text-zinc-800 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary transition-all resize-none"
                   />
                 </div>
                 <button
                   type="submit"
-                  className="w-full bg-primary text-white py-2.5 rounded-xl font-semibold text-xs flex items-center justify-center gap-2 hover:bg-tertiary hover:-translate-y-0.5 transition-all shadow-sm hover:shadow-md"
+                  className="w-full bg-primary text-white py-2.5 rounded-xl font-semibold text-sm flex items-center justify-center gap-2 hover:bg-tertiary hover:-translate-y-0.5 transition-all shadow-sm hover:shadow-md"
                 >
-                  <Send className="w-3.5 h-3.5" />
+                  <Send className="w-4 h-4" />
                   Send question
                 </button>
               </form>

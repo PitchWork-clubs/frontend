@@ -59,7 +59,7 @@ export default function InfiniteMarquee() {
             return (
               <div
                 key={ndx}
-                className="flex shrink-0 items-center gap-2 rounded-xl border border-gray-200/80 bg-white/90 px-3 py-1.5 text-xs font-bold tracking-wider text-gray-700 shadow-xs sm:gap-2.5 sm:px-4 sm:py-2"
+                className="flex shrink-0 items-center gap-2 rounded-xl border border-gray-200/80 bg-white/90 px-3 py-1.5 text-sm font-bold tracking-wider text-gray-700 shadow-xs sm:gap-2.5 sm:px-4 sm:py-2"
               >
                 <IconComponent className="h-4 w-4 text-primary shrink-0" />
                 <span>{item.label}</span>

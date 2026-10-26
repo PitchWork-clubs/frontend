@@ -21,14 +21,14 @@ export function HomeNavbar() {
         <span className="ml-1 text-base font-bold text-primary">PitchWork</span>
       </Link>
       <nav aria-label="Homepage sections" className={`home-nav-scroll order-3 flex w-full max-w-full items-center gap-1 overflow-x-auto border-t border-secondary/60 transition-[padding,border-color] duration-300 ease-out lg:order-none lg:w-auto lg:gap-8 lg:overflow-visible lg:border-t-0 lg:pt-0 ${isScrolled ? 'max-md:border-transparent max-md:pt-0' : 'pt-2'}`}>
-        <Link href="#features" className="shrink-0 rounded-full px-3 py-1.5 text-xs font-medium text-zinc-600 transition-colors hover:bg-white/70 hover:text-primary lg:px-0 lg:py-0 lg:hover:bg-transparent">Features</Link>
-        <Link href="#modules" className="shrink-0 rounded-full px-3 py-1.5 text-xs font-medium text-zinc-600 transition-colors hover:bg-white/70 hover:text-primary lg:px-0 lg:py-0 lg:hover:bg-transparent">Modules</Link>
-        <Link href="#who" className="shrink-0 rounded-full px-3 py-1.5 text-xs font-medium text-zinc-600 transition-colors hover:bg-white/70 hover:text-primary lg:px-0 lg:py-0 lg:hover:bg-transparent">Who it&apos;s for</Link>
-        <Link href="#faq" className="shrink-0 rounded-full px-3 py-1.5 text-xs font-medium text-zinc-600 transition-colors hover:bg-white/70 lg:px-0 lg:py-0 lg:hover:bg-transparent">FAQ</Link>
+        <Link href="#features" className="shrink-0 rounded-full px-3 py-1.5 text-sm font-medium text-zinc-600 transition-colors hover:bg-white/70 hover:text-primary lg:px-0 lg:py-0 lg:hover:bg-transparent">Features</Link>
+        <Link href="#modules" className="shrink-0 rounded-full px-3 py-1.5 text-sm font-medium text-zinc-600 transition-colors hover:bg-white/70 hover:text-primary lg:px-0 lg:py-0 lg:hover:bg-transparent">Modules</Link>
+        <Link href="#who" className="shrink-0 rounded-full px-3 py-1.5 text-sm font-medium text-zinc-600 transition-colors hover:bg-white/70 hover:text-primary lg:px-0 lg:py-0 lg:hover:bg-transparent">Who it&apos;s for</Link>
+        <Link href="#faq" className="shrink-0 rounded-full px-3 py-1.5 text-sm font-medium text-zinc-600 transition-colors hover:bg-white/70 lg:px-0 lg:py-0 lg:hover:bg-transparent">FAQ</Link>
       </nav>
       <div className={`ml-auto flex max-w-full flex-wrap items-center justify-end gap-2 overflow-hidden transition-[max-height,max-width,opacity] duration-300 ease-out sm:gap-3 md:opacity-100 ${isScrolled ? 'max-md:max-h-0 max-md:max-w-0 max-md:opacity-0 max-md:pointer-events-none' : 'max-md:max-h-10 max-md:max-w-[12rem]'}`}>
-        <Link href="/login" className={`text-xs font-medium text-zinc-600 transition-colors hover:text-primary ${isScrolled ? 'max-md:invisible' : ''}`}>Sign In</Link>
-        <Link href="/register" className={`rounded-xl bg-primary px-4 py-2 text-xs font-semibold text-white shadow-sm transition-all hover:-translate-y-0.5 hover:bg-tertiary hover:shadow-md ${isScrolled ? 'max-md:invisible' : ''}`}>Get Started</Link>
+        <Link href="/login" className={`text-sm font-medium text-zinc-600 transition-colors hover:text-primary ${isScrolled ? 'max-md:invisible' : ''}`}>Sign In</Link>
+        <Link href="/register" className={`rounded-xl bg-primary px-4 py-2 text-sm font-semibold text-white shadow-sm transition-all hover:-translate-y-0.5 hover:bg-tertiary hover:shadow-md ${isScrolled ? 'max-md:invisible' : ''}`}>Get Started</Link>
       </div>
     </header>
   );
