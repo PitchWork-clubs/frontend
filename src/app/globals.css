@@ -98,39 +98,45 @@
 :root {
   color-scheme: light;
 
-  /* Default Light Mode CSS variable fallbacks */
-  --color-primary: #005F31;
-  --color-primary-hover: #004d27;
-  --color-primary-active: #003b1e;
-  --color-primary-subtle: #f7fbf3;
-  --color-primary-muted: #eef5ed;
-  --color-primary-foreground: #ffffff;
+  /* Design system palette — Pitchwork Design Director v1.0 */
+  /* Primary brand: Pitch Green #163B2D */
+  --color-primary: #163B2D;
+  --color-primary-hover: #10271F;
+  --color-primary-active: #0b1d16;
+  --color-primary-subtle: #f0f4ee;
+  --color-primary-muted: #e6ede4;
+  --color-primary-foreground: #F4F2E9;
 
-  --color-secondary: #DFE3DA;
-  --color-secondary-hover: #cfd5c8;
-  --color-secondary-foreground: #09090b;
+  /* Secondary: Forest Green #244F3B */
+  --color-secondary: #D5D8CF;
+  --color-secondary-hover: #c4c8be;
+  --color-secondary-foreground: #202923;
 
-  --color-tertiary: #01562D;
-  --color-tertiary-hover: #014323;
-  --color-tertiary-foreground: #ffffff;
+  /* Tertiary: Forest Green surface */
+  --color-tertiary: #244F3B;
+  --color-tertiary-hover: #163B2D;
+  --color-tertiary-foreground: #F4F2E9;
 
-  --color-accent: #01562D;
-  --color-accent-foreground: #ffffff;
+  /* Accent: Sage #91AD83 */
+  --color-accent: #91AD83;
+  --color-accent-foreground: #163B2D;
 
-  --color-quaternary: #f7fbf3;
-  --color-quinary: #eef5ed;
+  /* Legacy surface aliases */
+  --color-quaternary: #F4F2E9;
+  --color-quinary: #EAE9E0;
 
-  --color-background: #ffffff;
-  --color-foreground: #09090b;
+  /* Surfaces */
+  --color-background: #F4F2E9;
+  --color-foreground: #202923;
   --color-card: #ffffff;
-  --color-card-foreground: #09090b;
+  --color-card-foreground: #202923;
   --color-popover: #ffffff;
-  --color-popover-foreground: #09090b;
-  --color-muted: #f4f4f5;
-  --color-muted-foreground: #71717a;
-  --color-border: #dfe3da;
-  --color-input: #dfe3da;
-  --color-ring: #005F31;
+  --color-popover-foreground: #202923;
+  --color-muted: #EAE9E0;
+  --color-muted-foreground: #626B63;
+  --color-border: #D5D8CF;
+  --color-input: #D5D8CF;
+  --color-ring: #163B2D;
 
   --color-success: #16a34a;
   --color-success-foreground: #ffffff;
@@ -142,57 +148,57 @@
   --color-info-foreground: #ffffff;
 }
 
-/* The marketing homepage keeps PitchWork's classic green identity. */
+/* The marketing homepage uses the full Pitchwork brand palette. */
 .home-page,
 .static-brand-page {
-  --color-primary: #005F31;
-  --color-primary-hover: #004d27;
-  --color-primary-active: #003b1e;
-  --color-primary-subtle: #f7fbf3;
-  --color-primary-muted: #eef5ed;
-  --color-primary-foreground: #ffffff;
+  --color-primary: #163B2D;
+  --color-primary-hover: #10271F;
+  --color-primary-active: #0b1d16;
+  --color-primary-subtle: #f0f4ee;
+  --color-primary-muted: #e6ede4;
+  --color-primary-foreground: #F4F2E9;
 
-  --color-secondary: #DFE3DA;
-  --color-secondary-hover: #cfd5c8;
-  --color-secondary-foreground: #09090b;
+  --color-secondary: #D5D8CF;
+  --color-secondary-hover: #c4c8be;
+  --color-secondary-foreground: #202923;
 
-  --color-tertiary: #01562D;
-  --color-tertiary-hover: #014323;
-  --color-tertiary-foreground: #ffffff;
+  --color-tertiary: #244F3B;
+  --color-tertiary-hover: #163B2D;
+  --color-tertiary-foreground: #F4F2E9;
 
-  --color-accent: #01562D;
-  --color-accent-foreground: #ffffff;
+  --color-accent: #91AD83;
+  --color-accent-foreground: #163B2D;
 
-  --color-quaternary: #f7fbf3;
-  --color-quinary: #eef5ed;
+  --color-quaternary: #F4F2E9;
+  --color-quinary: #EAE9E0;
 
-  --color-background: #ffffff;
-  --color-foreground: #09090b;
+  --color-background: #F4F2E9;
+  --color-foreground: #202923;
   --color-card: #ffffff;
-  --color-card-foreground: #09090b;
+  --color-card-foreground: #202923;
   --color-popover: #ffffff;
-  --color-popover-foreground: #09090b;
-  --color-muted: #f4f4f5;
-  --color-muted-foreground: #71717a;
-  --color-border: #dfe3da;
-  --color-input: #dfe3da;
-  --color-ring: #005F31;
+  --color-popover-foreground: #202923;
+  --color-muted: #EAE9E0;
+  --color-muted-foreground: #626B63;
+  --color-border: #D5D8CF;
+  --color-input: #D5D8CF;
+  --color-ring: #163B2D;
 }
 
 [data-theme="dark"],
 .dark {
   color-scheme: dark;
 
-  --color-background: #09090b;
-  --color-foreground: #f4f4f5;
-  --color-card: #141417;
-  --color-card-foreground: #f4f4f5;
-  --color-popover: #141417;
-  --color-popover-foreground: #f4f4f5;
-  --color-muted: #27272a;
-  --color-muted-foreground: #a1a1aa;
-  --color-border: #27272a;
-  --color-input: #27272a;
+  --color-background: #10271F;
+  --color-foreground: #F4F2E9;
+  --color-card: #163B2D;
+  --color-card-foreground: #F4F2E9;
+  --color-popover: #163B2D;
+  --color-popover-foreground: #F4F2E9;
+  --color-muted: #244F3B;
+  --color-muted-foreground: #91AD83;
+  --color-border: rgba(213, 216, 207, 0.18);
+  --color-input: rgba(213, 216, 207, 0.18);
 
   --color-success: #22c55e;
   --color-warning: #f59e0b;
