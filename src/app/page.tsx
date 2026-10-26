@@ -8,7 +8,7 @@ import Image from "next/image";
 import Link from "next/link";
 import InfiniteMarquee from "@/components/home/infiniteMarquee";
 import Chaos2ClaritySection from "@/components/home/chaos2Clarity.section";
-import { FaqSection, WhoSection } from "@/components/home/home.section";
+import { FaqSection, WhoSection, PrinciplesSection, RightSizeSection } from "@/components/home/home.section";
 import { HomeNavbar } from "@/components/home/home.navbar";
 
 const avatarLinks = [
@@ -139,6 +139,12 @@ export default function Home() {
       <section>
         <Chaos2ClaritySection />
       </section>
+
+      {/* Built on four principles */}
+      <PrinciplesSection />
+
+      {/* Right-size: use what you need */}
+      <RightSizeSection />
 
       {/* Starter Kit */}
       <section id="features" className="bg-quinary py-16 px-6">

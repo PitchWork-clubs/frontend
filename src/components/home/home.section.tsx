@@ -1,6 +1,142 @@
 "use client"
 
 import { ChevronDown, Send } from "lucide-react";
+
+// ─── Principles Section ───────────────────────────────────────────────────────
+
+const principles = [
+  {
+    number: "01",
+    title: "Assemble",
+    question: "What should be connected?",
+    desc: "Bring the scattered parts of your club — spreadsheets, group chats, paper notes — together so they work as a whole.",
+  },
+  {
+    number: "02",
+    title: "Adapt",
+    question: "How does this club work?",
+    desc: "Pitchwork fits the routines your people already have, instead of forcing every club into the same mould.",
+  },
+  {
+    number: "03",
+    title: "Right-size",
+    question: "What does this club need?",
+    desc: "A grassroots club might use five things, a professional club a hundred. Same foundation, your scale.",
+  },
+  {
+    number: "04",
+    title: "Preserve",
+    question: "What should the club never lose?",
+    desc: "Decisions, records and history stay with the club as coaches, volunteers and seasons come and go.",
+  },
+];
+
+export function PrinciplesSection() {
+  return (
+    <section className="w-full bg-quaternary py-20 px-6">
+      <div className="max-w-4xl mx-auto flex flex-col gap-10">
+        <div className="flex flex-col gap-2">
+          <h2 className="text-2xl font-bold text-foreground tracking-tight">Built on four principles.</h2>
+          <p className="text-muted-foreground text-sm">Every part of Pitchwork answers one simple question about your club.</p>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 border border-border rounded-xl overflow-hidden">
+          {principles.map((p, i) => (
+            <div
+              key={p.title}
+              className={[
+                "flex flex-col gap-3 p-7 bg-card",
+                // right border for left-column cards
+                i % 2 === 0 ? "sm:border-r border-border" : "",
+                // bottom border for top-row cards
+                i < 2 ? "border-b border-border" : "",
+              ].join(" ")}
+            >
+              <div className="flex items-start justify-between gap-4">
+                <h3 className="text-lg font-bold text-foreground tracking-tight">{p.title}</h3>
+                <span className="text-xs font-mono text-muted-foreground shrink-0 mt-1">{p.number}</span>
+              </div>
+              <p className="text-xs font-semibold text-primary">{p.question}</p>
+              <p className="text-sm text-muted-foreground leading-relaxed">{p.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── Right-size Section ───────────────────────────────────────────────────────
+
+const moduleGroups = [
+  { label: "Teams",         highlight: true },
+  { label: "Training",      highlight: true },
+  { label: "Matches",       highlight: true },
+  { label: "Attendance",    highlight: true },
+  { label: "Communication", highlight: true },
+  { label: "Players",       highlight: false },
+  { label: "Staff",         highlight: false },
+  { label: "Facilities",    highlight: false },
+  { label: "Finance",       highlight: false },
+  { label: "Contracts",     highlight: false },
+  { label: "Compliance",    highlight: false },
+  { label: "Scouting",      highlight: false },
+];
+
+const scaleLevels = [
+  { count: "5",   label: "Grassroots" },
+  { count: "20",  label: "Growing" },
+  { count: "100", label: "Professional" },
+];
+
+export function RightSizeSection() {
+  return (
+    <section className="w-full bg-primary py-20 px-6">
+      <div className="max-w-4xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
+
+        {/* Left: copy + stats */}
+        <div className="flex flex-col gap-8">
+          <div className="flex flex-col gap-4">
+            <h2 className="text-2xl font-bold text-primary-foreground tracking-tight leading-snug">
+              Use what your club needs. Add the rest later.
+            </h2>
+            <p className="text-sm text-primary-foreground/70 leading-relaxed max-w-sm">
+              A grassroots club sees teams, training, matches and attendance — not transfer negotiations
+              or salary structures. As you grow, Pitchwork grows with you.
+            </p>
+          </div>
+
+          <div className="border-t border-primary-foreground/20 pt-8 flex items-end gap-10">
+            {scaleLevels.map(({ count, label }) => (
+              <div key={label} className="flex flex-col gap-1">
+                <span className="text-3xl font-bold text-primary-foreground leading-none">{count}</span>
+                <span className="text-xs text-primary-foreground/55">{label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Right: module tags */}
+        <div className="flex flex-wrap gap-2.5">
+          {moduleGroups.map(({ label, highlight }) => (
+            <span
+              key={label}
+              className={[
+                "px-4 py-2 rounded-lg text-xs font-semibold border transition-none",
+                highlight
+                  ? "bg-accent/20 border-accent/50 text-primary-foreground"
+                  : "bg-transparent border-primary-foreground/20 text-primary-foreground/60",
+              ].join(" ")}
+            >
+              {label}
+            </span>
+          ))}
+        </div>
+
+      </div>
+    </section>
+  );
+}
 import { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { ScrollArea } from "@/components/ScrollArea";
