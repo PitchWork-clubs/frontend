@@ -32,13 +32,27 @@ export const metadata: Metadata = {
   title: "PitchWork - Club Management Platform",
   description: "A modern management platform designed specifically for football clubs and academies",
   icons: {
-    icon: DARK_MODE_ENABLED
-      ? [
-          { url: "/favicon/favicon-light.ico", media: "(prefers-color-scheme: light)" },
-          { url: "/favicon/favicon-dark.ico", media: "(prefers-color-scheme: dark)" },
-        ]
-      : [{ url: "/favicon/favicon-light.ico" }],
+    icon: [
+      { url: "/favicon-adaptive.svg", type: "image/svg+xml" },
+      { url: "/favicon.ico", sizes: "48x48" },
+      { url: "/favicon-32.png", type: "image/png", sizes: "32x32" },
+      { url: "/favicon-16.png", type: "image/png", sizes: "16x16" },
+    ],
+    apple: [
+      { url: "/apple-touch-icon.png" },
+      { url: "/apple-touch-icon-120.png", sizes: "120x120" },
+      { url: "/apple-touch-icon-152.png", sizes: "152x152" },
+      { url: "/apple-touch-icon-167.png", sizes: "167x167" },
+    ],
+    other: [
+      { rel: "mask-icon", url: "/safari-pinned-tab.svg" },
+    ],
   },
+  manifest: "/site.webmanifest",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#F7F5E9" },
+    { media: "(prefers-color-scheme: dark)", color: "#0F2318" },
+  ],
 };
 
 // Inline script to apply an exact cached palette before hydration when SSR has no club snapshot.
