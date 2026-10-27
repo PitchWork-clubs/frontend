@@ -109,8 +109,17 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="mt-8 w-full max-w-2xl translate-y-2 overflow-hidden rounded-2xl home-brand-shadow-frame transition-transform duration-300 hover:scale-[1.02] cursor-default lg:mt-0 lg:translate-y-5">
-            <Image src="/images/hero-image.jpeg" alt="PitchWork dashboard" width={1360} height={768} className="h-auto max-h-[calc(100svh-12rem)] w-full rounded-2xl object-contain" />
+          <div className="mt-8 w-full max-w-xl translate-y-2 transition-transform duration-300 hover:scale-[1.02] cursor-default lg:mt-0 lg:translate-y-5">
+            <Image
+              src="/images/brand/hero-figure-on-light-1200h.webp"
+              alt="Pitchwork — club manager illustration"
+              width={600}
+              height={1200}
+              className="h-auto max-h-[calc(100svh-8rem)] w-full object-contain drop-shadow-2xl"
+              placeholder="blur"
+              blurDataURL="data:image/webp;base64,UklGRuQAAABXRUJQVlA4INgAAACQBgCdASoYADAAPu1mqk6ppaOiKrgN+TAdiWcAxN2xwaaH44tw0sloYrlCpxaptMHM7Dfo5I+hSI6F7REQAP7oyicVx8x9y80hnyOuVsN1OmCU5qosect+jOYiu94qUoML7BShBzTZsqkTFCPDbqz9sKhquUBXw6dWpnrx1ciY4EFBo3jmrBTSiHLpWXPdm4vn/2BQECOsfay4b5oItGaO5AMsP50EFQaMgq8xTRIuGPKprk/vUbRS2LVJ6hir49X6x7iDadPD4T+OvV57fZTHOx8+eziSAAA="
+              priority
+            />
           </div>
 
           <div
@@ -298,8 +307,8 @@ export default function Home() {
 
             <div className="col-span-2 sm:col-span-2 flex flex-col gap-4">
               <div className="flex items-center gap-2">
-                <Image src="/images/logo-dark-clip.jpeg" alt="PitchWork" width={20} height={15} className="rounded-sm opacity-90" style={{ objectFit: 'contain' }} />
-                <span className="text-white font-bold text-sm tracking-tight">PitchWork</span>
+                <Image src="/images/brand/logo-mark-on-dark.svg" alt="Pitchwork" width={24} height={24} style={{ objectFit: 'contain' }} />
+                <span className="text-white font-bold text-sm tracking-tight">Pitchwork</span>
               </div>
               <p className="text-xs leading-relaxed max-w-68">
                 The modern management platform for football clubs and academies. Athletes, coaches, training, finances — all in one place.

@@ -19,13 +19,13 @@ export default function NotFound() {
       <header className="relative z-10 flex items-center justify-between max-w-5xl w-full mx-auto">
         <Link href="/" className="flex items-center gap-2.5 hover:opacity-90 transition-opacity">
           <Image
-            src="/images/logo-light-clip.jpeg"
-            alt="PitchWork Logo"
+            src="/images/brand/logo-mark-on-light.svg"
+            alt="Pitchwork Logo"
             width={32}
             height={32}
-            className="rounded-lg shadow-xs"
+            style={{ objectFit: 'contain' }}
           />
-          <span className="text-lg font-bold text-primary tracking-tight">PitchWork</span>
+          <span className="text-lg font-bold text-primary tracking-tight">Pitchwork</span>
         </Link>
 
         <Link
