@@ -46,22 +46,21 @@ export default function InfiniteMarquee() {
 
   return (
     /* Outer clip wrapper: [clip-path:inset(0)] prevents ANYTHING inside from overflowing the page boundary */
-    <div className="relative w-full overflow-hidden [clip-path:inset(0)] border-y border-primary/10 bg-quaternary py-1 select-none sm:py-4">
+    <div className="relative w-full overflow-hidden [clip-path:inset(0)] bg-quaternary py-1.5 select-none">
       {/* Track wrapper forced to exact 100% parent width */}
       <div className="w-full overflow-hidden motion-reduce:overflow-x-auto">
-        <div 
-          ref={containerRef} 
-          className="flex w-max shrink-0 items-center gap-8"
+        <div
+          ref={containerRef}
+          className="flex w-max shrink-0 items-center gap-6"
         >
           {[...marqueeFeatures, ...marqueeFeatures, ...marqueeFeatures].map((item, ndx) => {
             const IconComponent = item.icon;
-
             return (
               <div
                 key={ndx}
-                className="flex shrink-0 items-center gap-2 rounded-xl border border-gray-200/80 bg-white/90 px-3 py-1.5 text-sm font-bold tracking-wider text-gray-700 shadow-xs sm:gap-2.5 sm:px-4 sm:py-2"
+                className="flex shrink-0 items-center gap-1.5 rounded-lg border border-gray-200/80 bg-white/90 px-2.5 py-1 text-xs font-bold tracking-wider text-gray-700 shadow-xs"
               >
-                <IconComponent className="h-4 w-4 text-primary shrink-0" />
+                <IconComponent className="h-3 w-3 text-primary shrink-0" />
                 <span>{item.label}</span>
               </div>
             );

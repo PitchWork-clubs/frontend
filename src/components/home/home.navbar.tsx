@@ -1,49 +1,40 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Menu, X } from 'lucide-react';
 
 const navLinks = [
-  { href: '#features', label: 'Features' },
-  { href: '#modules', label: 'Modules' },
-  { href: '#who',      label: "Who it's for" },
-  { href: '#faq',      label: 'FAQ' },
+  { href: '#features',   label: 'Product'      },
+  { href: '#who',        label: "Who it's for"  },
+  { href: '#philosophy', label: 'Philosophy'    },
+  { href: '#modules',    label: 'Modules'       },
+  { href: '#faq',        label: 'FAQ'           },
 ];
 
 export function HomeNavbar() {
-  const [isScrolled, setIsScrolled]   = useState(false);
-  const [menuOpen,   setMenuOpen]     = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 24);
-    handleScroll();
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  // Close mobile menu on route hash change (link tap)
+  const [menuOpen, setMenuOpen] = useState(false);
   const closeMenu = () => setMenuOpen(false);
 
   return (
     <>
-      <header className={`sticky top-0 z-100 flex w-full items-center border-b border-secondary/50 bg-quaternary/90 px-4 backdrop-blur-sm transition-[padding] duration-200 sm:px-6 lg:py-4 ${isScrolled ? 'py-2' : 'py-3'}`}>
+      <header className="sticky top-0 z-100 flex w-full items-center px-6 py-3 sm:px-8 lg:px-10 lg:py-4">
 
-        {/* Logo — mark only on mobile, mark + name on desktop */}
-        <Link href="/" className="flex flex-1 items-center gap-2">
+        {/* Logo */}
+        <Link href="/" className="flex flex-1 items-center gap-2.5">
           <Image
             src="/images/brand/logo-mark-on-light.svg"
             alt="Pitchwork"
-            width={28}
-            height={28}
+            width={50}
+            height={50}
             style={{ objectFit: 'contain' }}
           />
-          <span className="text-base font-bold text-primary">Pitchwork</span>
+          <span className="text-xl font-bold text-primary tracking-tight">Pitchwork</span>
         </Link>
 
-        {/* Desktop nav — centered */}
-        <nav aria-label="Homepage sections" className="hidden flex-none items-center gap-8 lg:flex">
+        {/* Desktop nav */}
+        <nav aria-label="Homepage sections" className="hidden flex-none items-center gap-7 lg:flex">
           {navLinks.map(({ href, label }) => (
             <Link
               key={href}
@@ -55,17 +46,20 @@ export function HomeNavbar() {
           ))}
         </nav>
 
-        {/* Desktop CTA — right side */}
-        <div className="hidden flex-1 items-center justify-end gap-3 lg:flex">
+        {/* Desktop CTA */}
+        <div className="hidden flex-1 items-center justify-end gap-4 lg:flex">
           <Link href="/login" className="text-sm font-medium text-zinc-600 transition-colors hover:text-primary">
-            Sign In
+            Log in
           </Link>
-          <Link href="/register" className="rounded-xl bg-primary px-4 py-2 text-sm font-semibold text-white shadow-sm transition-all hover:-translate-y-0.5 hover:bg-tertiary hover:shadow-md">
-            Get Started
+          <Link
+            href="/register"
+            className="rounded-full bg-primary px-5 py-2 text-sm font-semibold text-white shadow-sm transition-all hover:-translate-y-0.5 hover:bg-tertiary hover:shadow-md"
+          >
+            Get started
           </Link>
         </div>
 
-        {/* Mobile: hamburger button */}
+        {/* Mobile hamburger */}
         <button
           onClick={() => setMenuOpen((o) => !o)}
           aria-label={menuOpen ? 'Close menu' : 'Open menu'}
@@ -79,13 +73,10 @@ export function HomeNavbar() {
       {/* Mobile drawer */}
       {menuOpen && (
         <div className="fixed inset-0 z-99 lg:hidden" onClick={closeMenu} aria-hidden="true">
-          {/* Backdrop */}
           <div className="absolute inset-0 bg-zinc-900/30 backdrop-blur-sm" />
-
-          {/* Panel — slides in from the top under the header */}
           <nav
             aria-label="Mobile navigation"
-            className="absolute left-0 right-0 top-0 border-b border-secondary bg-quaternary px-4 pb-6 pt-[calc(3.25rem+1px)] shadow-lg"
+            className="absolute left-0 right-0 top-0 border-b border-secondary bg-quaternary px-4 pb-6 pt-14 shadow-lg"
             onClick={(e) => e.stopPropagation()}
           >
             <ul className="flex flex-col gap-1 pt-2">
@@ -101,21 +92,20 @@ export function HomeNavbar() {
                 </li>
               ))}
             </ul>
-
             <div className="mt-4 flex flex-col gap-2 border-t border-secondary pt-4">
               <Link
                 href="/login"
                 onClick={closeMenu}
-                className="flex w-full items-center justify-center rounded-xl border border-secondary px-4 py-2.5 text-sm font-semibold text-zinc-700 transition-all hover:border-primary hover:text-primary"
+                className="flex w-full items-center justify-center rounded-full border border-secondary px-4 py-2.5 text-sm font-semibold text-zinc-700 transition-all hover:border-primary hover:text-primary"
               >
-                Sign In
+                Log in
               </Link>
               <Link
                 href="/register"
                 onClick={closeMenu}
-                className="flex w-full items-center justify-center rounded-xl bg-primary px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition-all hover:bg-tertiary"
+                className="flex w-full items-center justify-center rounded-full bg-primary px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition-all hover:bg-tertiary"
               >
-                Get Started
+                Get started
               </Link>
             </div>
           </nav>

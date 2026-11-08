@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { cookies } from "next/headers";
 import Script from "next/script";
@@ -29,26 +29,23 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "PitchWork - Club Management Platform",
+  title: "Pitchwork - Club Management Platform",
   description: "A modern management platform designed specifically for football clubs and academies",
   icons: {
     icon: [
-      { url: "/favicon-adaptive.svg", type: "image/svg+xml" },
-      { url: "/favicon.ico", sizes: "48x48" },
+      { url: "/favicon-dark.svg", type: "image/svg+xml" },
+      { url: "/favicon-48.png", type: "image/png", sizes: "48x48" },
       { url: "/favicon-32.png", type: "image/png", sizes: "32x32" },
       { url: "/favicon-16.png", type: "image/png", sizes: "16x16" },
-    ],
-    apple: [
-      { url: "/apple-touch-icon.png" },
-      { url: "/apple-touch-icon-120.png", sizes: "120x120" },
-      { url: "/apple-touch-icon-152.png", sizes: "152x152" },
-      { url: "/apple-touch-icon-167.png", sizes: "167x167" },
     ],
     other: [
       { rel: "mask-icon", url: "/safari-pinned-tab.svg" },
     ],
   },
   manifest: "/site.webmanifest",
+};
+
+export const viewport: Viewport = {
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "#F7F5E9" },
     { media: "(prefers-color-scheme: dark)", color: "#0F2318" },

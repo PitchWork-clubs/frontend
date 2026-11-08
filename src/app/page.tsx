@@ -2,7 +2,7 @@
 import { Suspense } from "react";
 import {
   BadgeCheck, Briefcase, History, KeyRound,
-  TrendingUp, User, Users, Shield, Dumbbell,
+  User, Users, Shield, Dumbbell,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -11,12 +11,6 @@ import Chaos2ClaritySection from "@/components/home/chaos2Clarity.section";
 import { FaqSection, WhoSection, PrinciplesSection, RightSizeSection } from "@/components/home/home.section";
 import { HomeNavbar } from "@/components/home/home.navbar";
 
-const avatarLinks = [
-  "/images/trust/trust-01.jpg",
-  "/images/trust/trust-02.jpg",
-  "/images/trust/trust-03.jpg",
-  "/images/trust/trust-04.jpg",
-];
 
 const starterItems = [
   { label: "Athletes & Squads",    icon: Users },
@@ -35,113 +29,143 @@ export default function Home() {
 
       <HomeNavbar />
 
-      {/* Hero */}
-      <section id="hero" className="flex min-h-[calc(100svh-4rem)] w-full flex-col overflow-hidden lg:flex-row">
-        <div className="flex min-w-0 flex-1 flex-col justify-center px-6 py-10 sm:px-10 lg:pl-13 lg:pr-6 lg:py-8 left-home-hero-section">
-          <div className="inline-flex w-max items-center gap-2 bg-secondary rounded-[.4rem] px-3 py-1.5">
-            <div className="h-[.6rem] w-[.6rem] bg-primary rounded-full shrink-0 animate-swell" />
-            <span className="font-semibold text-xs leading-none text-zinc-700">NEW PLATFORM UPDATE</span>
+      {/* Hero + Marquee — share the viewport */}
+      <section id="hero" className="flex min-h-[calc(100svh-3.5rem)] w-full flex-col lg:h-[calc(100svh-3.5rem)] lg:min-h-0">
+
+        {/* Hero content row */}
+        <div className="flex min-h-0 flex-1 w-full flex-col lg:flex-row">
+          {/* Left: copy */}
+        <div className="flex min-w-0 flex-1 flex-col justify-center px-6 py-10 sm:px-10 lg:pl-16 lg:pr-6 lg:ml-10">
+          <div>
+            <h1 className="text-4xl font-bold text-zinc-900 leading-tight tracking-tight">
+              Everything your club<br />
+              <span className="text-primary/85">does, connected.</span>
+            </h1>
+            <p className="block w-full max-w-120 pt-10 pb-6 text-base leading-relaxed text-zinc-600 sm:w-2/3">
+              Pitchwork brings your people, training, matches and records altogether. It fits the way you already work, and gives you only what you need.
+            </p>
           </div>
 
-          <div className="pt-10">
-            <span className="text-4xl block font-bold text-zinc-900">Run your club with</span>
-            <span className="text-4xl block text-primary font-bold pt-3">clarity.</span>
-            <span className="block w-full max-w-md pt-8 text-base leading-relaxed text-zinc-700 sm:w-2/3">
-              The modern management platform for football clubs and academies. Organise athletes, staff, and schedules in one place.
-            </span>
-          </div>
-
-          <div className="flex flex-wrap gap-3 pt-10 pb-4">
+          <div className="flex flex-wrap gap-3 pt-8 pb-6">
             <Link
               href="/register"
               className="bg-primary text-white text-sm font-semibold px-5 py-2.5 rounded-xl hover:bg-tertiary hover:-translate-y-0.5 transition-all shadow-sm hover:shadow-lg"
             >
-              Get Started Free
+              Get Started
             </Link>
             <Link
               href="#features"
               className="px-5 py-2.5 rounded-xl bg-white border border-secondary text-sm font-semibold text-zinc-700 hover:border-primary hover:text-primary hover:-translate-y-0.5 transition-all shadow-sm"
             >
-              See How It Works
+              See how it works
             </Link>
           </div>
 
-          <div className="flex flex-wrap items-center gap-4 pt-8 pb-8">
-            <div className="flex -space-x-3 items-center">
-              {avatarLinks.map((avatar, ndx) => (
-                <div
-                  key={ndx}
-                  className="relative h-7 w-7 rounded-full border-2 border-white overflow-hidden shrink-0 animate-wave"
-                  style={{ zIndex: avatarLinks.length - ndx, animationDelay: `${ndx * 0.2}s` }}
-                >
-                  <Image src={avatar} alt={`Avatar ${ndx}`} fill sizes="28px" className="object-cover" />
-                </div>
-              ))}
-            </div>
-            <span className="text-sm text-zinc-600">Trusted by 500+ modern football clubs</span>
+          {/* Tag line */}
+          <div className="flex flex-col gap-1 pt-6">
+            <p className="text-[0.685rem] font-bold tracking-[.18em] uppercase text-zinc-600">
+              Assemble · Adapt · Right-Size
+            </p>
+            <p className="text-sm text-zinc-500">
+              Opening early access to football clubs and academies.
+            </p>
           </div>
         </div>
 
-        <div className="relative hidden flex-1 items-center px-6 py-8 sm:px-10 lg:flex lg:py-8 lg:pl-6 lg:pr-12 right-home-hero-section">
-          <div
-            className="absolute -left-30 z-20 bg-white/95 backdrop-blur-md p-3 rounded-2xl home-brand-shadow-card border border-secondary flex items-center gap-3 animate-wave hover:scale-105 transition-transform cursor-default"
-            style={{ animationDelay: ".3s" }}
-          >
-            <svg width={36} height={36} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary">
-              <polygon points="12 2 20.66 7 20.66 17 12 22 3.34 17 3.34 7" />
-              <polygon points="12 6 18 9 16 15 12 18 6 15 8 9" opacity="0.4" fill="currentColor" />
-              <line x1="12" y1="12" x2="12" y2="2" /><line x1="12" y1="12" x2="20.66" y2="7" />
-              <line x1="12" y1="12" x2="20.66" y2="17" /><line x1="12" y1="12" x2="12" y2="22" />
-              <line x1="12" y1="12" x2="3.34" y2="17" /><line x1="12" y1="12" x2="3.34" y2="7" />
+        {/* Right: dark card with figure + floating chips */}
+        <div className="relative hidden flex-1 items-center justify-center px-8 py-10 sm:px-10 lg:flex lg:py-10 lg:pl-6 lg:pr-12 right-home-hero-section">
+          {/* Dark green card */}
+          <div className="relative aspect-2/3 w-full max-w-136 max-h-full rounded-3xl bg-primary overflow-hidden">
+            {/* Pitch markings SVG — touch lines, halfway line, centre circle */}
+            <svg
+              className="absolute inset-0 w-full h-full pointer-events-none"
+              viewBox="0 0 400 650"
+              preserveAspectRatio="xMidYMid slice"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+            >
+              {/* Outer pitch border (touch lines + goal lines) */}
+              <rect x="28" y="28" width="344" height="594" rx="4" stroke="rgba(255,255,255,0.12)" strokeWidth="1.5" />
+              {/* Halfway line */}
+              <line x1="28" y1="325" x2="372" y2="325" stroke="rgba(255,255,255,0.12)" strokeWidth="1.5" />
+              {/* Centre circle */}
+              <circle cx="200" cy="325" r="72" stroke="rgba(255,255,255,0.12)" strokeWidth="1.5" />
+              {/* Centre spot */}
+              <circle cx="200" cy="325" r="3" fill="rgba(255,255,255,0.15)" />
+              {/* Top penalty arc */}
+              <path d="M 148 28 Q 200 110 252 28" stroke="rgba(255,255,255,0.09)" strokeWidth="1.5" fill="none" />
+              {/* Bottom penalty arc */}
+              <path d="M 148 622 Q 200 540 252 622" stroke="rgba(255,255,255,0.09)" strokeWidth="1.5" fill="none" />
+              {/* Top penalty box */}
+              <rect x="112" y="28" width="176" height="90" stroke="rgba(255,255,255,0.09)" strokeWidth="1.5" />
+              {/* Bottom penalty box */}
+              <rect x="112" y="532" width="176" height="90" stroke="rgba(255,255,255,0.09)" strokeWidth="1.5" />
             </svg>
-            <div>
-              <h4 className="text-sm font-bold text-zinc-900">Athlete stats</h4>
-              <p className="text-sm text-zinc-500">Goals: 12 · Assists: 5</p>
+
+            {/* Figure illustration — anchored to bottom-center */}
+              <div className="absolute bottom-0 left-1/2 -translate-x-1/2 h-full w-[20rem] pointer-events-none select-none">
+              <Image
+                src="/logo-figure-mono-white.png"
+                alt="Pitchwork — club manager illustration"
+                width={400}
+                height={900}
+                className="h-full w-full object-contain"
+                placeholder="blur"
+                blurDataURL="data:image/webp;base64,UklGRuQAAABXRUJQVlA4INgAAACQBgCdASoYADAAPu1mqk6ppaOiKrgN+TAdiWcAxN2xwaaH44tw0sloYrlCpxaptMHM7Dfo5I+hSI6F7REQAP7oyicVx8x9y80hnyOuVsN1OmCU5qosect+jOYiu94qUoML7BShBzTZsqkTFCPDbqz9sKhquUBXw6dWpnrx1ciY4EFBo3jmrBTSiHLpWXPdm4vn/2BQECOsfay4b5oItGaO5AMsP50EFQaMgq8xTRIuGPKprk/vUbRS2LVJ6hir49X6x7iDadPD4T+OvV57fZTHOx8+eziSAAA="
+                priority
+              />
             </div>
+
           </div>
 
-          <div className="absolute top-30 right-32 z-20 bg-white/95 backdrop-blur-md p-3 rounded-2xl home-brand-shadow-card border border-secondary flex flex-col items-center gap-2 animate-wave hover:scale-105 transition-transform cursor-default">
-            <span className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">Next Match</span>
-            <div className="flex items-center gap-2">
-              <div className="w-7 h-7 rounded-full bg-primary flex items-center justify-center text-white font-bold text-[0.6rem]">CS</div>
-              <span className="text-[0.6rem] text-zinc-400 font-bold">VS</span>
-              <div className="w-7 h-7 rounded-full bg-secondary flex items-center justify-center text-zinc-600 font-bold text-[0.6rem]">MA</div>
-            </div>
-          </div>
-
-          <div className="mt-8 w-full max-w-xl translate-y-2 transition-transform duration-300 hover:scale-[1.02] cursor-default lg:mt-0 lg:translate-y-5">
-            <Image
-              src="/images/brand/hero-figure-on-light-1200h.webp"
-              alt="Pitchwork — club manager illustration"
-              width={600}
-              height={1200}
-              className="h-auto max-h-[calc(100svh-8rem)] w-full object-contain drop-shadow-2xl"
-              placeholder="blur"
-              blurDataURL="data:image/webp;base64,UklGRuQAAABXRUJQVlA4INgAAACQBgCdASoYADAAPu1mqk6ppaOiKrgN+TAdiWcAxN2xwaaH44tw0sloYrlCpxaptMHM7Dfo5I+hSI6F7REQAP7oyicVx8x9y80hnyOuVsN1OmCU5qosect+jOYiu94qUoML7BShBzTZsqkTFCPDbqz9sKhquUBXw6dWpnrx1ciY4EFBo3jmrBTSiHLpWXPdm4vn/2BQECOsfay4b5oItGaO5AMsP50EFQaMgq8xTRIuGPKprk/vUbRS2LVJ6hir49X6x7iDadPD4T+OvV57fZTHOx8+eziSAAA="
-              priority
-            />
-          </div>
-
-          <div
-            className="absolute bottom-0 -left-8 z-20 bg-white/95 backdrop-blur-md p-3 rounded-2xl home-brand-shadow-card border border-secondary flex items-center gap-3 animate-wave hover:scale-105 transition-transform cursor-default"
-            style={{ animationDelay: ".2s" }}
-          >
-            <div className="w-8 h-8 rounded-full bg-quinary flex items-center justify-center text-primary">
-              <TrendingUp className="w-4 h-4" />
+          {/* Chip: ASSEMBLE — bottom-left of card */}
+          <div className="absolute bottom-100 left-7 z-10 bg-white rounded-2xl px-3.5 py-2.5 shadow-lg flex items-center gap-2.5 animate-wave" style={{ animationDelay: '0.2s' }}>
+            <div className="w-7 h-7 rounded-lg bg-secondary flex items-center justify-center shrink-0">
+              <svg className="w-3.5 h-3.5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
+              </svg>
             </div>
             <div>
-              <h4 className="text-sm font-bold text-zinc-900">Squad Availability</h4>
-              <p className="text-sm font-semibold text-primary">+12% this month</p>
+              <p className="text-[0.6rem] font-bold text-primary uppercase tracking-widest leading-none mb-0.5">Assemble</p>
+              <p className="text-xs font-semibold text-zinc-800 leading-tight">Scout note, linked</p>
+              <p className="text-[0.65rem] text-zinc-400 leading-tight">to the athlete&apos;s record</p>
+            </div>
+          </div>
+
+          {/* Chip: ADAPT — top-right of card */}
+          <div className="absolute top-50 right-15 z-10 bg-white rounded-2xl px-3.5 py-2.5 shadow-lg flex items-center gap-2.5 animate-wave" style={{ animationDelay: '0.5s' }}>
+            <div className="w-7 h-7 rounded-lg bg-secondary flex items-center justify-center shrink-0">
+              <svg className="w-3.5 h-3.5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4 4h6v6H4zm10 0h6v6h-6zm-10 10h6v6H4zm10 0h6v6h-6z" />
+              </svg>
+            </div>
+            <div>
+              <p className="text-[0.6rem] font-bold text-primary uppercase tracking-widest leading-none mb-0.5">Adapt</p>
+              <p className="text-xs font-semibold text-zinc-800 leading-tight">Works with your sheets</p>
+              <p className="text-[0.65rem] text-zinc-400 leading-tight">No forced new process</p>
+            </div>
+          </div>
+
+          {/* Chip: RIGHT-SIZE — bottom-right of card */}
+          <div className="absolute bottom-40 right-30 z-10 bg-white rounded-2xl px-3.5 py-2.5 shadow-lg flex items-center gap-2.5 animate-wave" style={{ animationDelay: '0.8s' }}>
+            <div className="w-7 h-7 rounded-lg bg-secondary flex items-center justify-center shrink-0">
+              <svg className="w-3.5 h-3.5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4 8h16M4 16h10" />
+              </svg>
+            </div>
+            <div>
+              <p className="text-[0.6rem] font-bold text-primary uppercase tracking-widest leading-none mb-0.5">Right-Size</p>
+              <p className="text-xs font-semibold text-zinc-800 leading-tight">Only the modules</p>
+              <p className="text-[0.65rem] text-zinc-400 leading-tight">your club needs</p>
             </div>
           </div>
         </div>
-      </section>
+        </div>
 
-      {/* Marquee */}
-      <section className="my-0 w-full max-w-full min-w-0 overflow-hidden sm:my-8">
-        <div className="hidden h-10 sm:block" />
-        <InfiniteMarquee />
-        <div className="hidden h-10 sm:block" />
+        <div className="w-full shrink-0 border-y border-secondary/40 m-9">
+          <InfiniteMarquee />
+        </div>
       </section>
 
       {/* Chaos → Clarity */}
@@ -150,10 +174,14 @@ export default function Home() {
       </section>
 
       {/* Built on four principles */}
-      <PrinciplesSection />
+      <section id="philosophy">
+        <PrinciplesSection />
+      </section>
 
       {/* Right-size: use what you need */}
-      <RightSizeSection />
+      <section>
+        <RightSizeSection />
+      </section>
 
       {/* Starter Kit */}
       <section id="features" className="bg-quinary py-16 px-6">
