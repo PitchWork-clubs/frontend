@@ -6,6 +6,7 @@
     "dev": "node init && next dev --webpack --port 3001",
     "build": "node init && next build",
     "start": "node init && next start",
+    "test:home": "node --test tests/homepage.test.mjs",
     "lint": "eslint src",
     "lint:strict": "eslint src --max-warnings 0"
   },
