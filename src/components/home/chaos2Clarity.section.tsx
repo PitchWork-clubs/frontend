@@ -142,9 +142,9 @@ export function Chaos2ClaritySection() {
         scroller: scrollViewport,
         trigger: scrollWrap,
         start: 'top top',
-        end: 'bottom top',
+        end: 'bottom bottom',
         pin: pinnedSection,
-        pinSpacing: false,
+        pinSpacing: true,
         scrub: true,
         onUpdate: ({ progress }) => {
           const introHold = 0.02;

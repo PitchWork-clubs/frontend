@@ -372,7 +372,6 @@
 
   .chaos2-clarity-sticky {
     position: relative;
-    top: auto;
     height: 100dvh;
     min-height: 0;
     overflow: hidden;

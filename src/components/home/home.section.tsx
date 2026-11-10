@@ -33,7 +33,7 @@ const principles = [
 
 export function PrinciplesSection() {
   return (
-    <section className="w-full bg-quaternary py-20 px-6">
+    <section className="w-full bg-quaternary px-6 py-8 sm:py-20">
       <div className="max-w-4xl mx-auto flex flex-col gap-10">
         <div className="flex flex-col gap-2">
           <h2 className="text-3xl font-bold text-foreground tracking-tight">Built on four principles.</h2>
@@ -187,7 +187,7 @@ export function WhoSection() {
     <div className="max-w-4xl mx-auto flex flex-col items-center gap-10">
       <div className="text-center flex flex-col gap-2">
         <h2 className="text-2xl font-bold text-zinc-900 tracking-tight">Who uses PitchWork?</h2>
-        <p className="text-zinc-500 text-sm">Every role gets exactly what they need.</p>
+        <p className="text-zinc-500 text-sm">Every member gets exactly what they need.</p>
       </div>
 
       <div className="flex flex-wrap justify-center gap-2">
