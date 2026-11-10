@@ -308,7 +308,7 @@ export function Chaos2ClaritySection() {
     <div ref={scrollWrapRef} className="chaos2-clarity-wrap relative h-[600vh] w-full">
       <div
         ref={stickyRef}
-        className="chaos2-clarity-sticky sticky top-0 h-dvh w-full overflow-hidden select-none bg-quaternary"
+        className="chaos2-clarity-sticky relative h-dvh w-full overflow-hidden select-none bg-quaternary"
       >
         {/* Headline strip — sits below the sticky navbar (navbar ~4rem tall) */}
         <div className="chaos2-clarity-headline-strip absolute inset-x-0 top-16 z-50 flex h-24 flex-col items-center justify-center gap-1.5 px-4 text-center pointer-events-none">
