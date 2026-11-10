@@ -367,15 +367,15 @@
 
 @media (max-width: 1023px) {
   .chaos2-clarity-wrap {
-    height: auto;
+    height: 250vh;
   }
 
   .chaos2-clarity-sticky {
     position: relative;
     top: auto;
-    height: auto;
-    min-height: 32rem;
-    overflow: visible;
+    height: 100dvh;
+    min-height: 0;
+    overflow: hidden;
   }
 
   .chaos2-clarity-layer {
@@ -442,16 +442,8 @@
 }
 
 @media (max-width: 767px) {
-  .chaos2-clarity-headline-strip {
-    display: none;
-  }
-
   .chaos2-clarity-layer {
     display: none;
-  }
-
-  .chaos-mobile-text {
-    display: flex;
   }
 
   .clarity-state-chrome {
@@ -504,4 +496,10 @@
   .fine\:hidden {
     display: none !important;
   }
+}
+
+.chaos2-clarity-frame-canvas {
+  top: 10rem;
+  height: calc(100% - 10rem);
+  background-color: #f4eddd;
 }

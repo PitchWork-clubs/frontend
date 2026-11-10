@@ -3,378 +3,182 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ArrowDown } from 'lucide-react';
-
-import { chaosCards } from './chaos2Clarity/chaos.state';
-import { ClarityState } from './chaos2Clarity/clarity.state';
+import { getBodyScrollViewport } from '@/components/ScrollArea';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const Z = { base: 10, hover: 500 } as const;
-
-// ---------------------------------------------------------------------------
-// Visual story
-//
-//  0%  – 15%   Chaos:      cards float and respond to hover
-//  15% – 40%   Converge:   cards fly toward their slot positions, un-rotate.
-//                          The window chrome fades in gently around them —
-//                          the frame appears AROUND the moving cards.
-//  40% – 70%   Land:       each card arrives at its slot and resizes to fill
-//                          it exactly (width/height morph). The card content
-//                          crossfades into the dashboard panel version.
-//  70% – 100%  Clarity:    headline swaps. Dashboard is fully assembled.
-//
-// No pre-existing empty grid. No hard swap. Cards ARE the panels.
-// ---------------------------------------------------------------------------
+const FRAME_COUNT = 30;
+const FRAME_IMAGE_SCALE = 0.7;
+const ANIMATION_FRAME_INDICES = Array.from({ length: FRAME_COUNT }, (_, index) => index);
+const FRAME_PATH = (index: number) =>
+  `/frames/frame_${String(index + 1).padStart(3, '0')}.webp`;
 
 export function Chaos2ClaritySection() {
   const scrollWrapRef = useRef<HTMLDivElement>(null);
-  const stickyRef     = useRef<HTMLDivElement>(null);
-  const cardFieldRef  = useRef<HTMLDivElement>(null);
-  const containerRef  = useRef<HTMLDivElement>(null);  // outer centering layer
-  const chromeRef     = useRef<HTMLDivElement>(null);  // window frame + nav
-  const headline1Ref  = useRef<HTMLHeadingElement>(null);
-  const headline2Ref  = useRef<HTMLHeadingElement>(null);
-  const subtitleRef   = useRef<HTMLParagraphElement>(null);
-  const subtitle2Ref  = useRef<HTMLParagraphElement>(null);
+  const stickyRef = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const headlineInitialRef = useRef<HTMLHeadingElement>(null);
+  const headlineFinalRef = useRef<HTMLHeadingElement>(null);
+  const subtitleInitialRef = useRef<HTMLParagraphElement>(null);
+  const subtitleFinalRef = useRef<HTMLParagraphElement>(null);
 
   useEffect(() => {
     const scrollWrap = scrollWrapRef.current;
-    const sticky     = stickyRef.current;
-    const cardField  = cardFieldRef.current;
-    if (!scrollWrap || !sticky || !cardField) return;
-    const media = gsap.matchMedia();
-    media.add('(min-width: 1024px) and (prefers-reduced-motion: no-preference)', () => {
-    const cardEls = gsap.utils.toArray<HTMLElement>('[data-chaos-card]', cardField);
-    const floatTweens: (gsap.core.Tween | undefined)[] = [];
-    const sourceDimensions = new Map<HTMLElement, { width: number; height: number }>();
+    const pinnedSection = stickyRef.current;
+    const canvas = canvasRef.current;
+    const context = canvas?.getContext('2d');
+    if (!scrollWrap || !pinnedSection || !canvas || !context) return;
 
-    // Set all initial states immediately so nothing is visible until scroll
-    gsap.set(containerRef.current, { opacity: 0 });
-    gsap.set(chromeRef.current,    { opacity: 0 });
-    gsap.set(headline2Ref.current, { opacity: 0, y: '0.875rem' });
-    gsap.set(subtitle2Ref.current, { opacity: 0, y: '0.5rem' });
-    // All slot panels start invisible
-    const getPanels = () =>
-      containerRef.current
-        ? Array.from(containerRef.current.querySelectorAll<HTMLElement>('[data-slot-panel]'))
-        : [];
-    gsap.set(getPanels(), { opacity: 0 });
+    let disposed = false;
+    let drawRequest = 0;
+    const images: (HTMLImageElement | undefined)[] = Array(FRAME_COUNT);
 
-    // Apply initial rotations via gsap.set so GSAP owns the full transform.
-    cardEls.forEach((el, i) => {
-      gsap.set(el, { rotation: chaosCards[i]?.initialRotation ?? 0 });
-    });
+    const drawImage = (image: HTMLImageElement, alpha: number) => {
+      const scale = Math.min(canvas.width / image.naturalWidth, canvas.height / image.naturalHeight) * FRAME_IMAGE_SCALE;
+      const width = image.naturalWidth * scale;
+      const height = image.naturalHeight * scale;
+      context.globalAlpha = alpha;
+      context.drawImage(image, (canvas.width - width) / 2, (canvas.height - height) / 2, width, height);
+    };
 
-    const ctx = gsap.context(() => {
+    const nearestLoadedImage = (index: number) => {
+      if (images[index]?.naturalWidth) return images[index];
+      for (let offset = 1; offset < FRAME_COUNT; offset += 1) {
+        const earlier = images[index - offset];
+        const later = images[index + offset];
+        if (earlier?.naturalWidth) return earlier;
+        if (later?.naturalWidth) return later;
+      }
+      return undefined;
+    };
 
-      // ── 1. Float animations ────────────────────────────────────────────
-      cardEls.forEach((el) => {
-        floatTweens.push(gsap.to(el, {
-          x: `+=${gsap.utils.random(-28, 28)}`,
-          y: `+=${gsap.utils.random(-22, 22)}`,
-          rotation: `+=${gsap.utils.random(-6, 6)}`,
-          duration: gsap.utils.random(2.5, 4.2),
-          ease: 'sine.inOut',
-          repeat: -1,
-          yoyo: true,
-          delay: gsap.utils.random(0, 2),
-        }));
-      });
+    const drawFrame = (framePosition: number) => {
+      if (disposed || !canvas.width || !canvas.height) return;
+      const keyframeIndex = Math.min(ANIMATION_FRAME_INDICES.length - 1, Math.floor(framePosition));
+      const blend = framePosition - keyframeIndex;
+      const currentIndex = ANIMATION_FRAME_INDICES[keyframeIndex];
+      const nextIndex = ANIMATION_FRAME_INDICES[Math.min(keyframeIndex + 1, ANIMATION_FRAME_INDICES.length - 1)];
+      const currentImage = nearestLoadedImage(currentIndex);
+      const nextImage = nearestLoadedImage(nextIndex);
 
-      // ── 2. Hover ───────────────────────────────────────────────────────
-      cardEls.forEach((el, i) => {
-        let isHovered  = false;
+      context.clearRect(0, 0, canvas.width, canvas.height);
+      if (currentImage) drawImage(currentImage, 1);
+      if (blend > 0 && nextImage && nextImage !== currentImage) drawImage(nextImage, blend);
+      context.globalAlpha = 1;
+    };
 
-        el.addEventListener('mouseenter', () => {
-          isHovered = true;
-          floatTweens[i]?.pause();
-          gsap.to(el, { scale: 1.25, rotation: 0, zIndex: Z.hover, duration: 0.2, ease: 'power2.out' });
-        });
-        el.addEventListener('mouseleave', () => {
-          isHovered  = false;
-          gsap.to(el, { scale: 1, zIndex: Z.base, duration: 0.2, ease: 'power2.out' });
-          floatTweens[i]?.resume();
-        });
-      });
+    const scheduleDraw = (framePosition: number) => {
+      cancelAnimationFrame(drawRequest);
+      drawRequest = requestAnimationFrame(() => drawFrame(framePosition));
+    };
 
-      // ── 3. Master scroll timeline ──────────────────────────────────────
-      let masterTl: gsap.core.Timeline | null = null;
+    const resizeCanvas = () => {
+      const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+      const bounds = canvas.getBoundingClientRect();
+      canvas.width = Math.round(bounds.width * pixelRatio);
+      canvas.height = Math.round(bounds.height * pixelRatio);
+      drawFrame(0);
+    };
 
-      const buildTimeline = () => {
-        if (masterTl) { masterTl.kill(); masterTl = null; }
-        floatTweens.forEach((t)  => t?.pause());
-          // Re-hide panels in case of rebuild
-        gsap.set(getPanels(), { opacity: 0 });
+    const handleResize = () => {
+      resizeCanvas();
+      ScrollTrigger.refresh();
+    };
 
-        masterTl = gsap.timeline({ paused: true });
+    const loadAnimationFrames = () => Promise.all(
+      ANIMATION_FRAME_INDICES.map((frameIndex) => new Promise<void>((resolve) => {
+        const image = new Image();
+        image.onload = () => resolve();
+        image.onerror = () => resolve();
+        image.src = FRAME_PATH(frameIndex);
+        images[frameIndex] = image;
+      })),
+    );
 
-        // Make the outer container visible (it's just a centering wrapper)
-        // so that the slot elements have correct DOMRect values.
-        // The chrome itself stays opacity:0 — we animate it separately.
-        gsap.set(containerRef.current, { opacity: 1 });
+    void loadAnimationFrames().then(() => {
+      if (disposed) return;
+      resizeCanvas();
 
-        // Layer stagger: bg cards start first, fg last
-        const layerStart: Record<string, number> = { bg: 0.15, mid: 0.19, fg: 0.23 };
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        drawFrame(ANIMATION_FRAME_INDICES.length - 1);
+        gsap.set([headlineInitialRef.current, subtitleInitialRef.current], { autoAlpha: 0 });
+        gsap.set([headlineFinalRef.current, subtitleFinalRef.current], { autoAlpha: 1 });
+        return;
+      }
 
-        // ── Phase: window chrome fades in while cards are converging ──────
-        // This makes the frame appear AROUND the cards as they arrive,
-        // not before them. Starts at 20%, fully visible by 45%.
-        masterTl.fromTo(
-          chromeRef.current,
-          { opacity: 0 },
-          { opacity: 1, ease: 'power1.inOut', duration: 0.25 },
-          0.20,
-        );
+      const scrollViewport = getBodyScrollViewport();
+      if (!scrollViewport) return;
 
-        cardEls.forEach((el, i) => {
-          const card   = chaosCards[i];
-          if (!card) return;
-
-          const slotEl = document.getElementById(`slot-${card.id}`);
-          if (!slotEl) return;
-
-          // Measure the source without transforms so the morph can be reversed cleanly.
-          const currentX = gsap.getProperty(el, 'x') as number;
-          const currentY = gsap.getProperty(el, 'y') as number;
-          const currentRotation = gsap.getProperty(el, 'rotation') as number;
-          const currentScale = gsap.getProperty(el, 'scale') as number;
-
-          gsap.set(el, { clearProps: 'width,height', x: 0, y: 0, rotation: 0, scale: 1 });
-          const sourceRect = el.getBoundingClientRect();
-          gsap.set(el, {
-            x: currentX,
-            y: currentY,
-            rotation: currentRotation,
-            scale: currentScale,
-          });
-          const cardRect = el.getBoundingClientRect();
-          const slotRect = slotEl.getBoundingClientRect();
-          const targetWidth = slotRect.width;
-          const targetHeight = slotRect.height;
-          sourceDimensions.set(el, { width: sourceRect.width, height: sourceRect.height });
-
-          const deltaX  = slotRect.left + slotRect.width  / 2 - cardRect.left - cardRect.width  / 2;
-          const deltaY  = slotRect.top  + slotRect.height / 2 - cardRect.top  - cardRect.height / 2;
-          const targetX = currentX + deltaX;
-          const targetY = currentY + deltaY;
-
-          const start = layerStart[card.layer] ?? 0.15;
-
-          masterTl!.call(() => el.classList.add('chaos-card-morphing'), [], start);
-
-          // Phase 1: card flies to its slot center, straightens out
-          masterTl!.to(el, {
-            x: targetX,
-            y: targetY,
-            width: targetWidth,
-            height: targetHeight,
-            rotation: 0,
-            scale: 1,
-            ease: 'power2.inOut',
-            duration: 0.42,
-          }, start);
-
-          // Phase 2: once landed, card crossfades INTO its slot panel.
-          // Both happen at the same screen position so it looks like the
-          // card transforms in place — not a disappear/appear swap.
-          const landTime = start + 0.42;
-
-          // Card fades out over 0.15s
-          masterTl!.to(el, {
-            opacity: 0,
-            ease: 'power2.in',
-            duration: 0.15,
-          }, landTime);
-
-          // Slot panel fades in starting 0.04s after card begins fading —
-          // overlap creates a crossfade, not a cut
-          const slotPanel = slotEl.querySelector<HTMLElement>('[data-slot-panel]');
-          if (slotPanel) {
-            masterTl!.fromTo(slotPanel,
-              { opacity: 0 },
-              { opacity: 1, ease: 'power2.out', duration: 0.15 },
-              landTime + 0.04,
-            );
-          }
-        });
-
-        // Phase 4: headline crossfade — after all cards have landed
-        masterTl.to(headline1Ref.current,
-          { opacity: 0, y: '-0.875rem', ease: 'power2.in', duration: 0.08 },
-          0.74,
-        );
-        masterTl.to(subtitleRef.current,
-          { opacity: 0, ease: 'power2.in', duration: 0.06 },
-          0.74,
-        );
-        masterTl.fromTo(headline2Ref.current,
-          { opacity: 0, y: '0.875rem' },
-          { opacity: 1, y: '0rem', ease: 'power2.out', duration: 0.10 },
-          0.82,
-        );
-        masterTl.fromTo(subtitle2Ref.current,
-          { opacity: 0, y: '0.5rem' },
-          { opacity: 1, y: '0rem', ease: 'power2.out', duration: 0.10 },
-          0.86,
-        );
-
-        return masterTl;
-      };
-
-      // ── Pin + scrub ────────────────────────────────────────────────────
       ScrollTrigger.create({
+        scroller: scrollViewport,
         trigger: scrollWrap,
         start: 'top top',
         end: 'bottom bottom',
-        pin: sticky,
+        pin: pinnedSection,
         pinSpacing: false,
-        scrub: 1.8,
+        scrub: true,
+        onUpdate: ({ progress }) => {
+          const introHold = 0.02;
+          const finishHold = 0.02;
+          const progressThroughFrames = Math.min(1, Math.max(0, (progress - introHold) / (1 - introHold - finishHold)));
+          const framePosition = progressThroughFrames * (ANIMATION_FRAME_INDICES.length - 1);
+          const titleProgress = Math.min(1, Math.max(0, (progressThroughFrames - 0.82) / 0.14));
 
-        onEnter() {
-          floatTweens.forEach((t) => t?.pause());
-          buildTimeline();
+          gsap.set(headlineInitialRef.current, { autoAlpha: 1 - titleProgress, y: -12 * titleProgress });
+          gsap.set(subtitleInitialRef.current, { autoAlpha: 1 - titleProgress });
+          gsap.set(headlineFinalRef.current, { autoAlpha: titleProgress, y: 12 * (1 - titleProgress) });
+          gsap.set(subtitleFinalRef.current, { autoAlpha: titleProgress, y: 8 * (1 - titleProgress) });
+          scheduleDraw(framePosition);
         },
-
-        onLeaveBack() {
-          masterTl?.kill();
-          masterTl = null;
-
-          // Reset chrome and container
-          gsap.set(containerRef.current, { opacity: 0 });
-          gsap.set(chromeRef.current,    { opacity: 0 });
-          gsap.set(getPanels(),          { opacity: 0 });
-
-          // Reset headlines
-          gsap.set(headline1Ref.current, { opacity: 1, y: '0rem' });
-          gsap.set(headline2Ref.current, { opacity: 0, y: '0.875rem' });
-          gsap.set(subtitleRef.current,  { opacity: 1 });
-          gsap.set(subtitle2Ref.current, { opacity: 0, y: '0.5rem' });
-
-          // Re-enable chaos after each card has finished returning to its source size.
-          cardEls.forEach((el, i) => {
-            floatTweens[i]?.kill();
-            el.classList.remove('chaos-card-morphing');
-            gsap.to(el, {
-              x: 0,
-              y: 0,
-              rotation: 0,
-              scale: 1,
-              opacity: 1,
-              duration: 0.5,
-              ease: 'power2.out',
-              overwrite: true,
-              ...(sourceDimensions.has(el)
-                ? {
-                    width: sourceDimensions.get(el)!.width,
-                    height: sourceDimensions.get(el)!.height,
-                  }
-                : {}),
-              onComplete: () => {
-                gsap.set(el, { clearProps: 'width,height' });
-                floatTweens[i] = gsap.to(el, {
-                  x: `+=${gsap.utils.random(-28, 28)}`,
-                  y: `+=${gsap.utils.random(-22, 22)}`,
-                  rotation: `+=${gsap.utils.random(-6, 6)}`,
-                  duration: gsap.utils.random(2.5, 4.2),
-                  ease: 'sine.inOut',
-                  repeat: -1,
-                  yoyo: true,
-                });
-              },
-            });
-          });
-        },
-
-        onUpdate(self) {
-          masterTl?.progress(self.progress);
+        onRefresh: (self) => {
+          const introHold = 0.02;
+          const finishHold = 0.02;
+          const progressThroughFrames = Math.min(1, Math.max(0, (self.progress - introHold) / (1 - introHold - finishHold)));
+          const framePosition = progressThroughFrames * (ANIMATION_FRAME_INDICES.length - 1);
+          scheduleDraw(framePosition);
         },
       });
 
-    }, scrollWrap);
-
-    const handleResize = () => ScrollTrigger.refresh();
-    window.addEventListener('resize', handleResize);
-    return () => {
-      cardEls.forEach((el) => el.classList.remove('chaos-card-morphing'));
-      ctx.revert();
-      window.removeEventListener('resize', handleResize);
-    };
+      window.addEventListener('resize', handleResize);
     });
-    return () => media.revert();
+
+    return () => {
+      disposed = true;
+      cancelAnimationFrame(drawRequest);
+      window.removeEventListener('resize', handleResize);
+      ScrollTrigger.getAll().forEach((trigger) => {
+        if (trigger.trigger === scrollWrap) trigger.kill();
+      });
+    };
   }, []);
 
   return (
-    <div ref={scrollWrapRef} className="chaos2-clarity-wrap relative h-[600vh] w-full">
+    <div ref={scrollWrapRef} className="chaos2-clarity-wrap relative h-[250vh] w-full motion-reduce:h-dvh">
       <div
         ref={stickyRef}
-        className="chaos2-clarity-sticky relative h-dvh w-full overflow-hidden select-none bg-quaternary"
+        className="chaos2-clarity-sticky relative h-dvh w-full overflow-hidden select-none bg-quaternary motion-reduce:static"
       >
-        {/* Headline strip — sits below the sticky navbar (navbar ~4rem tall) */}
-        <div className="chaos2-clarity-headline-strip absolute inset-x-0 top-16 z-50 flex h-24 flex-col items-center justify-center gap-1.5 px-4 text-center pointer-events-none">
-          <div className="relative flex justify-center w-full">
-            <h2 ref={headline1Ref} className="chaos2-clarity-headline-initial font-bold text-2xl text-zinc-900 tracking-tight leading-tight">
+        <canvas
+          ref={canvasRef}
+          className="chaos2-clarity-frame-canvas absolute inset-x-0 bottom-0 w-full"
+          aria-hidden="true"
+        />
+
+        <div className="chaos2-clarity-headline-strip absolute inset-x-0 top-16 z-10 flex h-24 flex-col items-center justify-center gap-1.5 bg-[#f4eddd] px-4 text-center pointer-events-none">
+          <div className="relative flex min-h-8 w-full items-center justify-center">
+            <h2 ref={headlineInitialRef} className="absolute inset-x-0 font-bold text-2xl text-zinc-900 tracking-tight leading-tight">
               Running a club shouldn&apos;t feel this scattered.
             </h2>
-            <h2 ref={headline2Ref} className="chaos2-clarity-headline-final absolute inset-0 flex items-center justify-center font-bold text-2xl text-zinc-900 tracking-tight leading-tight opacity-0">
+            <h2 ref={headlineFinalRef} className="absolute inset-x-0 font-bold text-2xl text-zinc-900 tracking-tight leading-tight opacity-0">
               Everything your club needs. Together.
             </h2>
           </div>
-          <div className="relative h-4 w-full flex justify-center">
-            <p ref={subtitleRef} className="chaos2-clarity-subtitle-initial absolute text-zinc-500 text-xs max-w-md font-sans">
-              Spreadsheets, group chats, and disconnected schedules — all in one place.
-            </p>
-            <p ref={subtitle2Ref} className="chaos2-clarity-subtitle-final absolute text-zinc-500 text-xs max-w-md font-sans opacity-0">
-              One workspace. Every part of your club, organised.
-            </p>
-          </div>
-        </div>
-
-        {/* Chaos cards — below headline strip (top-16 + h-24 = top-40) */}
-        <div ref={cardFieldRef} className="chaos-card-field absolute inset-x-0 bottom-0 top-40 pointer-events-auto **:select-none **:[-webkit-user-drag:none]">
-          {chaosCards.map((card) => (
-            <div
-              key={card.id}
-              data-chaos-card={card.id}
-              data-layer={card.layer}
-              className={`chaos-card absolute h-34 w-auto shadow-md rounded-lg select-none ${card.positionClass}`}
-              draggable="false"
-              style={{ zIndex: Z.base }}
-            >
-              {card.component}
-            </div>
-          ))}
-        </div>
-
-        {/* Dashboard — same region as card field */}
-        <div className="chaos2-clarity-layer absolute inset-x-0 bottom-0 top-40 z-20 pointer-events-none">
-          <ClarityState containerRef={containerRef} chromeRef={chromeRef} />
-        </div>
-
-        {/* Lightweight mobile story: the desktop card field becomes a readable text sequence. */}
-        <div className="chaos-mobile-text absolute inset-x-0 bottom-0 top-40 hidden flex-col items-center justify-center px-6 text-center md:hidden">
-          <h2 className="text-2xl font-bold leading-tight text-zinc-900">Everything your club needs. Together.</h2>
-          <p className="mt-3 max-w-xs text-sm leading-relaxed text-zinc-500">
-            Turn scattered tools into one clear workspace.
+          <p ref={subtitleInitialRef} className="absolute mt-12 text-zinc-600 text-xs max-w-md font-sans">
+            Spreadsheets, group chats, and disconnected schedules — all in one place.
           </p>
-
-          <div className="chaos-mobile-badge-field mt-8 flex w-full max-w-sm flex-wrap justify-center gap-2">
-            {['Spreadsheets', 'Group chats', 'Schedules', 'Athletes', 'Staff', 'Permissions'].map((label, index) => (
-              <span
-                key={label}
-                className="chaos-mobile-badge rounded-full border border-secondary bg-white px-3 py-1.5 text-xs font-semibold text-zinc-600 shadow-sm"
-                style={{ animationDelay: `${index * 0.12}s` }}
-              >
-                {label}
-              </span>
-            ))}
-          </div>
-
-          <ArrowDown className="chaos-mobile-arrow my-5 h-5 w-5 text-primary" aria-hidden="true" />
-
-          <div className="rounded-2xl border border-primary/20 bg-primary px-6 py-4 text-lg font-bold text-primary-foreground shadow-lg">
-            PitchWork
-          </div>
+          <p ref={subtitleFinalRef} className="absolute mt-12 text-zinc-600 text-xs max-w-md font-sans opacity-0">
+            One workspace. Every part of your club, organised.
+          </p>
         </div>
       </div>
     </div>

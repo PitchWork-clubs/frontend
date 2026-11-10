@@ -1,8 +1,12 @@
 import assert from "node:assert/strict";
-import { readFile } from "node:fs/promises";
+import { readdir, readFile, stat } from "node:fs/promises";
 import test from "node:test";
 
 const homepage = await readFile(new URL("../src/app/page.tsx", import.meta.url), "utf8");
+const chaosClarity = await readFile(
+  new URL("../src/components/home/chaos2Clarity.section.tsx", import.meta.url),
+  "utf8",
+);
 
 test("homepage exposes the hero section and primary navigation actions", () => {
   assert.match(homepage, /<section id="hero"/);
@@ -30,4 +34,37 @@ test("feature marquee is rendered inside the hero after the hero content", () =>
 test("desktop hero is sized to the viewport while small screens can grow with content", () => {
   assert.match(homepage, /min-h-\[calc\(100svh-3\.5rem\)\]/);
   assert.match(homepage, /lg:h-\[calc\(100svh-3\.5rem\)\]/);
+});
+
+test("Chaos to Clarity pins one canvas and maps ScrollTrigger progress through changing frames", () => {
+  assert.match(chaosClarity, /<canvas[\s\S]*?aria-hidden="true"/);
+  assert.match(chaosClarity, /pin:\s*pinnedSection/);
+  assert.match(chaosClarity, /scroller:\s*scrollViewport/);
+  assert.match(chaosClarity, /getBodyScrollViewport/);
+  assert.match(chaosClarity, /end:\s*'bottom bottom'/);
+  assert.match(chaosClarity, /pinSpacing:\s*false/);
+  assert.match(chaosClarity, /scrub:\s*true/);
+  assert.match(chaosClarity, /const FRAME_IMAGE_SCALE = 0\.7/);
+  assert.match(chaosClarity, /\* FRAME_IMAGE_SCALE/);
+  assert.match(chaosClarity, /framePosition = progressThroughFrames \* \(ANIMATION_FRAME_INDICES\.length - 1\)/);
+  assert.match(chaosClarity, /const ANIMATION_FRAME_INDICES = Array\.from\(\{ length: FRAME_COUNT \}, \(_, index\) => index\)/);
+  assert.match(chaosClarity, /h-\[250vh\]/);
+});
+
+test("Chaos to Clarity uses the numbered frame files and keeps reduced-motion users on a static final frame", async () => {
+  const frameDirectory = new URL("../public/frames/", import.meta.url);
+  const expectedNames = Array.from(
+    { length: 30 },
+    (_, index) => `frame_${String(index + 1).padStart(3, "0")}.webp`,
+  );
+
+  assert.deepEqual((await readdir(frameDirectory)).sort(), expectedNames);
+  for (const name of expectedNames) {
+    const { size } = await stat(new URL(name, frameDirectory));
+    assert.ok(size <= 50 * 1024, `${name} exceeds 50 KiB`);
+  }
+
+  assert.match(chaosClarity, /\/frames\/frame_\$\{String\(index \+ 1\)\.padStart\(3, '0'\)\}\.webp/);
+  assert.match(chaosClarity, /prefers-reduced-motion: reduce/);
+  assert.match(chaosClarity, /drawFrame\(ANIMATION_FRAME_INDICES\.length - 1\)/);
 });
