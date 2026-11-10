@@ -503,3 +503,10 @@
   height: calc(100% - 10rem);
   background-color: #f4eddd;
 }
+
+@media (max-width: 639px) {
+  .chaos2-clarity-frame-canvas {
+    top: 12rem;
+    height: calc(100% - 12rem);
+  }
+}

@@ -10,6 +10,8 @@ gsap.registerPlugin(ScrollTrigger);
 const FRAME_COUNT = 30;
 const FRAME_IMAGE_SCALE = 0.7;
 const ANIMATION_FRAME_INDICES = Array.from({ length: FRAME_COUNT }, (_, index) => index);
+const INITIAL_HEADLINE = "Running a club shouldn't feel this scattered.";
+const FINAL_HEADLINE = 'Everything your club needs. Together.';
 const FRAME_PATH = (index: number) =>
   `/frames/frame_${String(index + 1).padStart(3, '0')}.webp`;
 
@@ -32,6 +34,33 @@ export function Chaos2ClaritySection() {
     let disposed = false;
     let drawRequest = 0;
     const images: (HTMLImageElement | undefined)[] = Array(FRAME_COUNT);
+
+    const updateHeadlines = (progress: number) => {
+      const initialEraseEnd = 0.18;
+      const finalTypeStart = 0.78;
+      const finalTypeEnd = 1;
+      const initialCharacters = progress < initialEraseEnd
+        ? Math.round((1 - progress / initialEraseEnd) * INITIAL_HEADLINE.length)
+        : 0;
+      const finalCharacters = progress < finalTypeStart
+        ? 0
+        : Math.round(((progress - finalTypeStart) / (finalTypeEnd - finalTypeStart)) * FINAL_HEADLINE.length);
+      const initialText = INITIAL_HEADLINE.slice(0, Math.max(0, Math.min(INITIAL_HEADLINE.length, initialCharacters)));
+      const finalText = FINAL_HEADLINE.slice(0, Math.max(0, Math.min(FINAL_HEADLINE.length, finalCharacters)));
+
+      if (headlineInitialRef.current) {
+        if (headlineInitialRef.current.textContent !== initialText) {
+          headlineInitialRef.current.textContent = initialText;
+        }
+        headlineInitialRef.current.style.opacity = initialText ? '1' : '0';
+      }
+      if (headlineFinalRef.current) {
+        if (headlineFinalRef.current.textContent !== finalText) {
+          headlineFinalRef.current.textContent = finalText;
+        }
+        headlineFinalRef.current.style.opacity = finalText ? '1' : '0';
+      }
+    };
 
     const drawImage = (image: HTMLImageElement, alpha: number) => {
       const scale = Math.min(canvas.width / image.naturalWidth, canvas.height / image.naturalHeight) * FRAME_IMAGE_SCALE;
@@ -113,7 +142,7 @@ export function Chaos2ClaritySection() {
         scroller: scrollViewport,
         trigger: scrollWrap,
         start: 'top top',
-        end: 'bottom bottom',
+        end: 'bottom top',
         pin: pinnedSection,
         pinSpacing: false,
         scrub: true,
@@ -122,12 +151,11 @@ export function Chaos2ClaritySection() {
           const finishHold = 0.02;
           const progressThroughFrames = Math.min(1, Math.max(0, (progress - introHold) / (1 - introHold - finishHold)));
           const framePosition = progressThroughFrames * (ANIMATION_FRAME_INDICES.length - 1);
-          const titleProgress = Math.min(1, Math.max(0, (progressThroughFrames - 0.82) / 0.14));
+          const subtitleProgress = Math.min(1, Math.max(0, (progressThroughFrames - 0.82) / 0.14));
 
-          gsap.set(headlineInitialRef.current, { autoAlpha: 1 - titleProgress, y: -12 * titleProgress });
-          gsap.set(subtitleInitialRef.current, { autoAlpha: 1 - titleProgress });
-          gsap.set(headlineFinalRef.current, { autoAlpha: titleProgress, y: 12 * (1 - titleProgress) });
-          gsap.set(subtitleFinalRef.current, { autoAlpha: titleProgress, y: 8 * (1 - titleProgress) });
+          updateHeadlines(progressThroughFrames);
+          gsap.set(subtitleInitialRef.current, { autoAlpha: 1 - subtitleProgress });
+          gsap.set(subtitleFinalRef.current, { autoAlpha: subtitleProgress });
           scheduleDraw(framePosition);
         },
         onRefresh: (self) => {
@@ -135,6 +163,7 @@ export function Chaos2ClaritySection() {
           const finishHold = 0.02;
           const progressThroughFrames = Math.min(1, Math.max(0, (self.progress - introHold) / (1 - introHold - finishHold)));
           const framePosition = progressThroughFrames * (ANIMATION_FRAME_INDICES.length - 1);
+          updateHeadlines(progressThroughFrames);
           scheduleDraw(framePosition);
         },
       });
@@ -164,21 +193,23 @@ export function Chaos2ClaritySection() {
           aria-hidden="true"
         />
 
-        <div className="chaos2-clarity-headline-strip absolute inset-x-0 top-16 z-10 flex h-24 flex-col items-center justify-center gap-1.5 bg-[#f4eddd] px-4 text-center pointer-events-none">
-          <div className="relative flex min-h-8 w-full items-center justify-center">
-            <h2 ref={headlineInitialRef} className="absolute inset-x-0 font-bold text-2xl text-zinc-900 tracking-tight leading-tight">
-              Running a club shouldn&apos;t feel this scattered.
+        <div className="chaos2-clarity-headline-strip absolute inset-x-0 top-16 z-10 flex min-h-32 flex-col items-center justify-center gap-2 bg-[#f4eddd] px-4 py-3 text-center pointer-events-none sm:h-24 sm:min-h-0 sm:gap-1.5 sm:py-0">
+          <div className="relative flex min-h-12 w-full items-center justify-center sm:min-h-8">
+            <h2 ref={headlineInitialRef} className="absolute inset-x-0 font-bold text-xl text-zinc-900 tracking-tight leading-tight text-balance sm:text-2xl">
+              {INITIAL_HEADLINE}
             </h2>
-            <h2 ref={headlineFinalRef} className="absolute inset-x-0 font-bold text-2xl text-zinc-900 tracking-tight leading-tight opacity-0">
-              Everything your club needs. Together.
+            <h2 ref={headlineFinalRef} className="absolute inset-x-0 font-bold text-xl text-zinc-900 tracking-tight leading-tight text-balance opacity-0 sm:text-2xl">
+              {FINAL_HEADLINE}
             </h2>
           </div>
-          <p ref={subtitleInitialRef} className="absolute mt-12 text-zinc-600 text-xs max-w-md font-sans">
-            Spreadsheets, group chats, and disconnected schedules — all in one place.
-          </p>
-          <p ref={subtitleFinalRef} className="absolute mt-12 text-zinc-600 text-xs max-w-md font-sans opacity-0">
-            One workspace. Every part of your club, organised.
-          </p>
+          <div className="relative min-h-8 w-full sm:min-h-4">
+            <p ref={subtitleInitialRef} className="absolute inset-x-0 top-0 text-zinc-600 text-xs max-w-md mx-auto font-sans leading-snug">
+              Spreadsheets, group chats, and disconnected schedules — all in one place.
+            </p>
+            <p ref={subtitleFinalRef} className="absolute inset-x-0 top-0 text-zinc-600 text-xs max-w-md mx-auto font-sans leading-snug opacity-0">
+              One workspace. Every part of your club, organised.
+            </p>
+          </div>
         </div>
       </div>
     </div>

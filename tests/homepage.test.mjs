@@ -41,7 +41,7 @@ test("Chaos to Clarity pins one canvas and maps ScrollTrigger progress through c
   assert.match(chaosClarity, /pin:\s*pinnedSection/);
   assert.match(chaosClarity, /scroller:\s*scrollViewport/);
   assert.match(chaosClarity, /getBodyScrollViewport/);
-  assert.match(chaosClarity, /end:\s*'bottom bottom'/);
+  assert.match(chaosClarity, /end:\s*'bottom top'/);
   assert.match(chaosClarity, /pinSpacing:\s*false/);
   assert.match(chaosClarity, /scrub:\s*true/);
   assert.match(chaosClarity, /const FRAME_IMAGE_SCALE = 0\.7/);
