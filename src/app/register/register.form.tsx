@@ -3,9 +3,13 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Eye, EyeOff } from "lucide-react";
-import { Field, FieldError, FieldGroup, FieldLabel } from "@/components/ui/field";
+import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { PasswordRequirements, passwordMeetsRequirements } from "@/components/auth/password-requirements";
+import { AuthFieldError } from "@/components/auth/auth-field-error.component";
+
+type RegisterField = "firstName" | "lastName" | "email" | "password" | "confirmPassword" | "dob";
+type RegisterErrors = Partial<Record<RegisterField, string>>;
 
 export default function RegisterForm() {
   const [showPassword, setShowPassword] = useState(false);
@@ -15,44 +19,110 @@ export default function RegisterForm() {
   const [hasFailedPasswordValidation, setHasFailedPasswordValidation] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState("");
   const [gender, setGender] = useState<"Male" | "Female">("Male");
-  const [error, setError] = useState<string | null>(null);
+  const [errors, setErrors] = useState<RegisterErrors>({});
+  const [submitError, setSubmitError] = useState("");
+  const [shakeAttempt, setShakeAttempt] = useState(0);
+
+  const clearError = (field: RegisterField) => {
+    setSubmitError("");
+    setErrors((currentErrors) => {
+      if (!currentErrors[field]) return currentErrors;
+      const nextErrors = { ...currentErrors };
+      delete nextErrors[field];
+      return nextErrors;
+    });
+  };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const firstName = String(formData.get("firstName") ?? "").trim();
+    const lastName = String(formData.get("lastName") ?? "").trim();
+    const email = String(formData.get("email") ?? "").trim();
+    const dateOfBirth = String(formData.get("dob") ?? "");
+    const nextErrors: RegisterErrors = {};
+
+    if (!firstName) nextErrors.firstName = "Enter your first name.";
+    if (!lastName) nextErrors.lastName = "Enter your last name.";
+    if (!email) {
+      nextErrors.email = "Enter your email address.";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      nextErrors.email = "Enter a valid email address.";
+    }
     if (!passwordMeetsRequirements(password)) {
-      setHasFailedPasswordValidation(true);
-      setError("Please meet the password requirements below.");
+      nextErrors.password = "Choose a password that meets the requirements below.";
+    }
+    if (!confirmPassword) {
+      nextErrors.confirmPassword = "Confirm your password.";
+    } else if (password !== confirmPassword) {
+      nextErrors.confirmPassword = "Passwords do not match.";
+    }
+    if (!dateOfBirth) {
+      nextErrors.dob = "Enter your date of birth.";
+    } else {
+      const today = new Date();
+      const localToday = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
+      if (dateOfBirth > localToday) nextErrors.dob = "Date of birth cannot be in the future.";
+    }
+
+    setHasFailedPasswordValidation(Boolean(nextErrors.password));
+    setErrors(nextErrors);
+    if (Object.keys(nextErrors).length > 0) {
+      setSubmitError("Please fix the highlighted fields before creating your account.");
+      setShakeAttempt((attempt) => attempt + 1);
       return;
     }
-    setHasFailedPasswordValidation(false);
-    if (password !== confirmPassword) {
-      setError("Your passwords do not match.");
-      return;
-    }
-    setError(null);
+    setSubmitError("");
     // Submission handler with form values
   };
 
   return (
-    <form onSubmit={handleSubmit} className="auth-form space-y-2 text-[0.7rem] sm:space-y-2.5 sm:text-xs [&_[data-slot=field-label]]:text-xs">
-      {error && <FieldError className="rounded-lg border border-red-200 bg-red-50 p-2.5 text-red-600">{error}</FieldError>}
+    <form noValidate onSubmit={handleSubmit} className="auth-form space-y-2 text-[0.7rem] sm:space-y-2.5 sm:text-xs [&_[data-slot=field-label]]:text-xs">
       <FieldGroup className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-        <Field>
+        <Field data-invalid={Boolean(errors.firstName)}>
           <FieldLabel htmlFor="first-name">First Name</FieldLabel>
-          <Input id="first-name" name="firstName" placeholder="John" required />
+          <Input
+            id="first-name"
+            name="firstName"
+            placeholder="John"
+            onChange={() => clearError("firstName")}
+            aria-invalid={Boolean(errors.firstName)}
+            aria-describedby={errors.firstName ? "register-first-name-error" : undefined}
+            required
+          />
+          {errors.firstName && <AuthFieldError id="register-first-name-error" animationKey={shakeAttempt}>{errors.firstName}</AuthFieldError>}
         </Field>
-        <Field>
+        <Field data-invalid={Boolean(errors.lastName)}>
           <FieldLabel htmlFor="last-name">Last Name</FieldLabel>
-          <Input id="last-name" name="lastName" placeholder="Doe" required />
+          <Input
+            id="last-name"
+            name="lastName"
+            placeholder="Doe"
+            onChange={() => clearError("lastName")}
+            aria-invalid={Boolean(errors.lastName)}
+            aria-describedby={errors.lastName ? "register-last-name-error" : undefined}
+            required
+          />
+          {errors.lastName && <AuthFieldError id="register-last-name-error" animationKey={shakeAttempt}>{errors.lastName}</AuthFieldError>}
         </Field>
       </FieldGroup>
 
-      <Field>
+      <Field data-invalid={Boolean(errors.email)}>
         <FieldLabel htmlFor="email">Email Address</FieldLabel>
-        <Input id="email" name="email" type="email" placeholder="john.doe@example.com" required />
+        <Input
+          id="email"
+          name="email"
+          type="email"
+          placeholder="john.doe@example.com"
+          onChange={() => clearError("email")}
+          aria-invalid={Boolean(errors.email)}
+          aria-describedby={errors.email ? "register-email-error" : undefined}
+          required
+        />
+        {errors.email && <AuthFieldError id="register-email-error" animationKey={shakeAttempt}>{errors.email}</AuthFieldError>}
       </Field>
 
-      <Field>
+      <Field data-invalid={Boolean(errors.password)}>
         <FieldLabel htmlFor="password">Password</FieldLabel>
         <div className="relative">
           <Input
@@ -64,8 +134,11 @@ export default function RegisterForm() {
             onChange={(event) => {
               setPassword(event.target.value);
               setHasFailedPasswordValidation(false);
-              setError(null);
+              clearError("password");
+              clearError("confirmPassword");
             }}
+            aria-invalid={Boolean(errors.password)}
+            aria-describedby={errors.password ? "register-password-error" : undefined}
             onFocus={() => setIsPasswordFocused(true)}
             onBlur={() => setIsPasswordFocused(false)}
             required
@@ -83,9 +156,10 @@ export default function RegisterForm() {
           password={password}
           isVisible={isPasswordFocused || hasFailedPasswordValidation}
         />
+        {errors.password && <AuthFieldError id="register-password-error" animationKey={shakeAttempt}>{errors.password}</AuthFieldError>}
       </Field>
 
-      <Field>
+      <Field data-invalid={Boolean(errors.confirmPassword)}>
         <FieldLabel htmlFor="confirm-password">Confirm Password</FieldLabel>
         <div className="relative">
           <Input
@@ -96,9 +170,10 @@ export default function RegisterForm() {
             value={confirmPassword}
             onChange={(event) => {
               setConfirmPassword(event.target.value);
-              setError(null);
+              clearError("confirmPassword");
             }}
-            aria-invalid={confirmPassword.length > 0 && confirmPassword !== password}
+            aria-invalid={Boolean(errors.confirmPassword)}
+            aria-describedby={errors.confirmPassword ? "register-confirm-password-error" : undefined}
             className="pr-10"
             required
           />
@@ -111,17 +186,25 @@ export default function RegisterForm() {
             {showConfirmPassword ? <EyeOff size={16} /> : <Eye size={16} />}
           </button>
         </div>
-        {confirmPassword.length > 0 && confirmPassword !== password && (
-          <p className="mt-1 text-[0.7rem] text-red-600 sm:text-xs">Passwords do not match.</p>
-        )}
+        {errors.confirmPassword && <AuthFieldError id="register-confirm-password-error" animationKey={shakeAttempt}>{errors.confirmPassword}</AuthFieldError>}
       </Field>
 
       <FieldGroup className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-        <Field>
+        <Field data-invalid={Boolean(errors.dob)}>
           <FieldLabel htmlFor="dob">Date of Birth</FieldLabel>
           <div className="relative">
-            <Input id="dob" name="dob" type="date" placeholder="yyyy-mm-dd" required />
+            <Input
+              id="dob"
+              name="dob"
+              type="date"
+              placeholder="yyyy-mm-dd"
+              onChange={() => clearError("dob")}
+              aria-invalid={Boolean(errors.dob)}
+              aria-describedby={errors.dob ? "register-dob-error" : undefined}
+              required
+            />
           </div>
+          {errors.dob && <AuthFieldError id="register-dob-error" animationKey={shakeAttempt}>{errors.dob}</AuthFieldError>}
         </Field>
         <Field>
           <FieldLabel htmlFor="nationality">Nationality</FieldLabel>
@@ -181,6 +264,7 @@ export default function RegisterForm() {
       >
         Create Account
       </button>
+      {submitError && <AuthFieldError id="register-submit-error" animationKey={shakeAttempt}>{submitError}</AuthFieldError>}
 
       <div className="relative flex py-1 items-center">
         <div className="grow border-t border-gray-200" />

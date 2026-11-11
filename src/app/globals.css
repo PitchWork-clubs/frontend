@@ -338,6 +338,30 @@
   }
 }
 
+@keyframes auth-field-error-shake {
+  0%, 100% { transform: translateX(0); }
+  8% { transform: translateX(-0.35rem); }
+  16% { transform: translateX(0.35rem); }
+  24% { transform: translateX(-0.3rem); }
+  32% { transform: translateX(0.3rem); }
+  40% { transform: translateX(-0.22rem); }
+  48% { transform: translateX(0.22rem); }
+  56% { transform: translateX(-0.14rem); }
+  64% { transform: translateX(0.14rem); }
+  72% { transform: translateX(-0.08rem); }
+  80% { transform: translateX(0); }
+}
+
+.auth-field-error-shake {
+  animation: auth-field-error-shake 1.5s ease-in-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .auth-field-error-shake {
+    animation: none;
+  }
+}
+
 .home-brand-shadow-card {
   box-shadow: 0 20px 50px color-mix(in srgb, var(--color-primary) 12%, transparent);
 }

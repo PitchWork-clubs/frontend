@@ -5,32 +5,72 @@ import Link from "next/link";
 import { Eye, EyeOff } from "lucide-react";
 import { Field, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import { AuthFieldError } from "@/components/auth/auth-field-error.component";
+
+type LoginField = "email" | "password";
+type LoginErrors = Partial<Record<LoginField, string>>;
 
 export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState<LoginErrors>({});
+  const [submitError, setSubmitError] = useState("");
+  const [shakeAttempt, setShakeAttempt] = useState(0);
+
+  const clearError = (field: LoginField) => {
+    setSubmitError("");
+    setErrors((currentErrors) => {
+      if (!currentErrors[field]) return currentErrors;
+      const nextErrors = { ...currentErrors };
+      delete nextErrors[field];
+      return nextErrors;
+    });
+  };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const nextErrors: LoginErrors = {};
+    const trimmedEmail = email.trim();
+
+    if (!trimmedEmail) {
+      nextErrors.email = "Enter your email address.";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail)) {
+      nextErrors.email = "Enter a valid email address.";
+    }
+    if (!password) nextErrors.password = "Enter your password.";
+
+    setErrors(nextErrors);
+    if (Object.keys(nextErrors).length > 0) {
+      setSubmitError("Please fix the highlighted fields before signing in.");
+      setShakeAttempt((attempt) => attempt + 1);
+      return;
+    }
+    setSubmitError("");
     // Handle login submission logic
   };
 
   return (
-    <form onSubmit={handleSubmit} className="auth-form space-y-3.5 text-[0.7rem] sm:space-y-4 sm:text-xs [&_[data-slot=field-label]]:text-xs">
-      <Field>
+    <form noValidate onSubmit={handleSubmit} className="auth-form space-y-3.5 text-[0.7rem] sm:space-y-4 sm:text-xs **:data-[slot=field-label]:text-xs">
+      <Field data-invalid={Boolean(errors.email)}>
         <FieldLabel htmlFor="email">Email Address</FieldLabel>
         <Input
           id="email"
           type="email"
           placeholder="john.doe@example.com"
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={(e) => {
+            setEmail(e.target.value);
+            clearError("email");
+          }}
+          aria-invalid={Boolean(errors.email)}
+          aria-describedby={errors.email ? "login-email-error" : undefined}
           required
         />
+        {errors.email && <AuthFieldError id="login-email-error" animationKey={shakeAttempt}>{errors.email}</AuthFieldError>}
       </Field>
 
-      <Field>
+      <Field data-invalid={Boolean(errors.password)}>
         <div className="flex items-center justify-between">
           <FieldLabel htmlFor="password">Password</FieldLabel>
           <Link
@@ -46,7 +86,12 @@ export default function LoginForm() {
             type={showPassword ? "text" : "password"}
             placeholder="••••••••"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => {
+              setPassword(e.target.value);
+              clearError("password");
+            }}
+            aria-invalid={Boolean(errors.password)}
+            aria-describedby={errors.password ? "login-password-error" : undefined}
             required
           />
           <button
@@ -58,6 +103,7 @@ export default function LoginForm() {
             {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
           </button>
         </div>
+        {errors.password && <AuthFieldError id="login-password-error" animationKey={shakeAttempt}>{errors.password}</AuthFieldError>}
       </Field>
 
       <button
@@ -66,6 +112,7 @@ export default function LoginForm() {
       >
         Sign In
       </button>
+      {submitError && <AuthFieldError id="login-submit-error" animationKey={shakeAttempt}>{submitError}</AuthFieldError>}
 
       <div className="relative flex py-1 items-center">
         <div className="grow border-t border-gray-200" />
