@@ -1,47 +1,15 @@
-import Image from "next/image";
-import Link from "next/link";
 import LoginForm from "./login.form";
 import { ScrollArea } from "@/components/ScrollArea";
+import { AuthBrandPanel } from "@/components/auth/auth.brand.panel";
 
 export default function LoginPage() {
   return (
-    <div className="min-h-dvh w-full flex items-center justify-center bg-linear-to-br from-amber-50 via-teal-50 to-emerald-100 p-4 sm:p-6 lg:p-8">
-      <div className="relative w-full max-w-5xl min-h-0 rounded-3xl bg-[#111111] shadow-2xl flex flex-col overflow-hidden lg:h-[90dvh] lg:max-h-[90dvh] lg:flex-row">
-        {/* Left Hero Brand Panel - Server Rendered */}
-        <div className="relative w-full lg:w-1/2 p-6 sm:p-8 lg:p-10 flex flex-col justify-between text-white z-10 overflow-hidden">
-          <Image
-            src="/images/hero-football-athlete.jpeg"
-            alt="Soccer athlete background"
-            fill
-            className="object-cover absolute inset-0 z-0"
-            priority
-          />
-          <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/50 to-black/20 z-10" />
-
-          <Link
-            href="/"
-            className="relative z-20 flex gap-2 items-center w-fit hover:opacity-90 transition-opacity"
-          >
-            <Image
-              src="/images/logo-light-clip.jpeg"
-              alt="Logo - Light Clip"
-              width={30}
-              height={30}
-              className="rounded-md"
-            />
-            <h3 className="text-sm font-semibold sm:text-base">PitchWork</h3>
-          </Link>
-
-          <div className="relative z-20 space-y-2 sm:space-y-3 mt-auto">
-            <h2 className="text-base font-bold tracking-tight sm:text-xl">Run with Clarity.</h2>
-            <p className="max-w-md text-[0.65rem] leading-relaxed text-gray-300 sm:text-[0.7rem]">
-              The modern management platform for football clubs and academies. Sign in to manage your athletes, coaches, and schedules with surgical precision.
-            </p>
-          </div>
-        </div>
+    <div className="flex min-h-dvh w-full items-center justify-center bg-quinary p-0 sm:p-4 lg:p-8">
+      <div className="relative flex min-h-0 w-full max-w-5xl flex-col overflow-hidden rounded-none bg-primary shadow-2xl sm:rounded-3xl lg:h-[90dvh] lg:max-h-[90dvh] lg:flex-row">
+        <AuthBrandPanel variant="login" />
 
         {/* Right Form Panel */}
-        <ScrollArea className="relative z-20 flex w-full shrink-0 flex-col justify-start rounded-t-3xl bg-[#f8fbf6] p-6 lg:min-h-0 lg:w-1/2 lg:flex-1 lg:rounded-none sm:p-8">
+        <ScrollArea className="auth-form-scroll-area relative z-20 flex w-full shrink-0 flex-col justify-start rounded-b-none bg-quaternary p-6 sm:rounded-b-3xl lg:min-h-0 lg:w-1/2 lg:flex-1 lg:rounded-none sm:p-8">
           <div className="mx-auto w-full max-w-md py-4 space-y-4 sm:py-6 sm:space-y-5 lg:py-8">
             <div>
               <h1 className="text-base font-bold text-gray-900 sm:text-lg">Welcome Back</h1>

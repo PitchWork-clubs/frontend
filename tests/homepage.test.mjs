@@ -3,6 +3,12 @@ import { readdir, readFile, stat } from "node:fs/promises";
 import test from "node:test";
 
 const homepage = await readFile(new URL("../src/app/page.tsx", import.meta.url), "utf8");
+const loginPage = await readFile(new URL("../src/app/login/page.tsx", import.meta.url), "utf8");
+const registerPage = await readFile(new URL("../src/app/register/page.tsx", import.meta.url), "utf8");
+const authBrandPanel = await readFile(
+  new URL("../src/components/auth/auth.brand.panel.tsx", import.meta.url),
+  "utf8",
+);
 const chaosClarity = await readFile(
   new URL("../src/components/home/chaos2Clarity.section.tsx", import.meta.url),
   "utf8",
@@ -17,6 +23,14 @@ test("homepage exposes the hero section and primary navigation actions", () => {
 test("hero includes the club illustration with descriptive alternative text", () => {
   assert.match(homepage, /src="\/logo-figure-mono-white\.png"/);
   assert.match(homepage, /alt="Pitchwork — club manager illustration"/);
+});
+
+test("signup and login use the shared Pitchwork auth banner without legacy ClubSheet assets", () => {
+  assert.match(loginPage, /<AuthBrandPanel variant="login"\s*\/>/);
+  assert.match(registerPage, /<AuthBrandPanel variant="register"\s*\/>/);
+  assert.match(authBrandPanel, /logo-mark-on-dark\.svg/);
+  assert.match(authBrandPanel, /logo-figure-on-dark-plate\.svg/);
+  assert.doesNotMatch(loginPage + registerPage, /hero-football-athlete|logo-light-clip/);
 });
 
 test("feature marquee is rendered inside the hero after the hero content", () => {

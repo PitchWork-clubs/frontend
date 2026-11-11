@@ -329,6 +329,15 @@
   font-size: 0.875rem;
 }
 
+@media (min-width: 64rem) {
+  .auth-form-scroll-area > [data-overlayscrollbars-contents] {
+    display: flex;
+    min-height: 100%;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
+
 .home-brand-shadow-card {
   box-shadow: 0 20px 50px color-mix(in srgb, var(--color-primary) 12%, transparent);
 }
